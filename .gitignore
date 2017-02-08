@@ -1,4 +1,4 @@
-*.?#[0-9]
+*.?#[0-9#]
 /Track-Cam.GBL
 /Track-Cam.GBO
 /Track-Cam.GBP

@@ -4385,13 +4385,6 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <wire x1="167.64" y1="45.72" x2="167.64" y2="113.03" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$3" class="0">
-<segment>
-<pinref part="IC1" gate="MCU" pin="PA4"/>
-<wire x1="149.86" y1="48.26" x2="165.1" y2="48.26" width="0.1524" layer="91"/>
-<wire x1="165.1" y1="48.26" x2="165.1" y2="111.76" width="0.1524" layer="91"/>
-</segment>
-</net>
 <net name="N$4" class="0">
 <segment>
 <pinref part="IC1" gate="MCU" pin="PA5"/>
@@ -4422,6 +4415,14 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <pinref part="AUX" gate="A" pin="7"/>
 <wire x1="149.86" y1="83.82" x2="154.94" y2="83.82" width="0.1524" layer="91"/>
 <wire x1="154.94" y1="83.82" x2="154.94" y2="113.03" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$3" class="0">
+<segment>
+<pinref part="IC1" gate="MCU" pin="PA4"/>
+<pinref part="AUX" gate="A" pin="3"/>
+<wire x1="149.86" y1="48.26" x2="165.1" y2="48.26" width="0.1524" layer="91"/>
+<wire x1="165.1" y1="48.26" x2="165.1" y2="113.03" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>

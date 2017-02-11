@@ -200,10 +200,10 @@
 <hole x="-12.7" y="-12.7" drill="1"/>
 </package>
 <package name="SG90-CAMERA-MOUNT-NR">
-<wire x1="-14.5" y1="-14.5" x2="-14.5" y2="14.5" width="0.127" layer="21"/>
-<wire x1="-14.5" y1="14.5" x2="14.5" y2="14.5" width="0.127" layer="21"/>
-<wire x1="14.5" y1="14.5" x2="14.5" y2="-14.5" width="0.127" layer="21"/>
-<wire x1="14.5" y1="-14.5" x2="-14.5" y2="-14.5" width="0.127" layer="21"/>
+<wire x1="-14.5" y1="-14.5" x2="-14.5" y2="14.5" width="0.2032" layer="21"/>
+<wire x1="-14.5" y1="14.5" x2="14.5" y2="14.5" width="0.2032" layer="21"/>
+<wire x1="14.5" y1="14.5" x2="14.5" y2="-14.5" width="0.2032" layer="21"/>
+<wire x1="14.5" y1="-14.5" x2="-14.5" y2="-14.5" width="0.2032" layer="21"/>
 <text x="-10.16" y="10.16" size="1.27" layer="25" font="vector">&gt;NAME</text>
 <hole x="-12.7" y="12.7" drill="1"/>
 <hole x="12.7" y="12.7" drill="1"/>
@@ -334,22 +334,6 @@
 </library>
 <library name="connector">
 <packages>
-<package name="MICRO-USB-POWER">
-<smd name="5" x="-1.2" y="-2.1" dx="0.7" dy="2.8" layer="1"/>
-<smd name="1" x="1.2" y="-2.1" dx="0.7" dy="2.8" layer="1"/>
-<hole x="3.7" y="3.5" drill="1.4"/>
-<hole x="-3.7" y="3.5" drill="1.4"/>
-<wire x1="-3.825" y1="-0.575" x2="3.825" y2="-0.575" width="0.127" layer="21"/>
-<wire x1="3.825" y1="-0.575" x2="3.825" y2="7.575" width="0.127" layer="21"/>
-<wire x1="3.825" y1="7.575" x2="-3.825" y2="7.575" width="0.127" layer="21"/>
-<wire x1="-3.825" y1="7.575" x2="-3.825" y2="-0.575" width="0.127" layer="21"/>
-<rectangle x1="-1.4" y1="-3.435" x2="-1" y2="-0.75" layer="51"/>
-<rectangle x1="1" y1="-3.435" x2="1.4" y2="-0.75" layer="51"/>
-<text x="-0.11409375" y="5.4658" size="1.016" layer="25" font="vector" rot="R180" align="bottom-center">&gt;NAME</text>
-<rectangle x1="-3.825" y1="-0.575" x2="3.825" y2="7.575" layer="41"/>
-<text x="0" y="0" size="1.016" layer="21" font="vector" align="bottom-center">micro
-USB</text>
-</package>
 <package name="53047-0510">
 <description>&lt;b&gt;HEADER&lt;/b&gt;</description>
 <wire x1="-4.12" y1="1.25" x2="4.12" y2="1.25" width="0.2032" layer="21"/>
@@ -597,6 +581,37 @@ USB</text>
 <vertex x="2.413" y="-1.905"/>
 </polygon>
 </package>
+<package name="MICRO-USB-POWER/M">
+<smd name="5" x="-1.2" y="-2.1" dx="1.3" dy="2.8" layer="1"/>
+<smd name="1" x="1.2" y="-2.1" dx="1.3" dy="2.8" layer="1"/>
+<hole x="3.7" y="3.5" drill="1.4"/>
+<hole x="-3.7" y="3.5" drill="1.4"/>
+<wire x1="-3.825" y1="-0.575" x2="3.825" y2="-0.575" width="0.2032" layer="21"/>
+<wire x1="3.825" y1="-0.575" x2="3.825" y2="7.575" width="0.2032" layer="21"/>
+<wire x1="3.825" y1="7.575" x2="-3.825" y2="7.575" width="0.2032" layer="21"/>
+<wire x1="-3.825" y1="7.575" x2="-3.825" y2="-0.575" width="0.2032" layer="21"/>
+<rectangle x1="-1.4" y1="-3.435" x2="-1" y2="-0.75" layer="51"/>
+<rectangle x1="1" y1="-3.435" x2="1.4" y2="-0.75" layer="51"/>
+<text x="-0.11409375" y="5.4658" size="1.016" layer="25" font="vector" rot="R180" align="bottom-center">&gt;NAME</text>
+<text x="0" y="0" size="1.016" layer="21" font="vector" align="bottom-center">micro
+USB</text>
+</package>
+<package name="MICRO-USB-POWER">
+<smd name="5" x="-1.2" y="-2.1" dx="0.7" dy="2.8" layer="1"/>
+<smd name="1" x="1.2" y="-2.1" dx="0.7" dy="2.8" layer="1"/>
+<hole x="3.7" y="3.5" drill="1.4"/>
+<hole x="-3.7" y="3.5" drill="1.4"/>
+<wire x1="-3.825" y1="-0.575" x2="3.825" y2="-0.575" width="0.2032" layer="21"/>
+<wire x1="3.825" y1="-0.575" x2="3.825" y2="7.575" width="0.2032" layer="21"/>
+<wire x1="3.825" y1="7.575" x2="-3.825" y2="7.575" width="0.2032" layer="21"/>
+<wire x1="-3.825" y1="7.575" x2="-3.825" y2="-0.575" width="0.2032" layer="21"/>
+<rectangle x1="-1.4" y1="-3.435" x2="-1" y2="-0.75" layer="51"/>
+<rectangle x1="1" y1="-3.435" x2="1.4" y2="-0.75" layer="51"/>
+<text x="-0.11409375" y="5.4658" size="1.016" layer="25" font="vector" rot="R180" align="bottom-center">&gt;NAME</text>
+<rectangle x1="-3.825" y1="-0.575" x2="3.825" y2="7.575" layer="41"/>
+<text x="0" y="0" size="1.016" layer="21" font="vector" align="bottom-center">micro
+USB</text>
+</package>
 </packages>
 <symbols>
 <symbol name="USB-POWER">
@@ -666,6 +681,15 @@ Micro USB, B type Female Solder type</description>
 </gates>
 <devices>
 <device name="" package="MICRO-USB-POWER">
+<connects>
+<connect gate="G$1" pin="GND" pad="5"/>
+<connect gate="G$1" pin="VCC" pad="1"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="/M" package="MICRO-USB-POWER/M">
 <connects>
 <connect gate="G$1" pin="GND" pad="5"/>
 <connect gate="G$1" pin="VCC" pad="1"/>
@@ -827,7 +851,6 @@ Official outline with cutouts for camera flex connector</description>
 <wire x1="7.1" y1="49.96" x2="8.0525" y2="49.96" width="0.127" layer="21"/>
 <wire x1="8.0525" y1="49.96" x2="8.6875" y2="49.96" width="0.127" layer="21"/>
 <wire x1="9.64" y1="49.96" x2="57.9" y2="49.96" width="0.127" layer="21"/>
-<wire x1="57.9" y1="49.96" x2="57.9" y2="55.04" width="0.127" layer="21"/>
 <wire x1="57.9" y1="55.04" x2="7.1" y2="55.04" width="0.127" layer="21"/>
 <wire x1="7.1" y1="52.5" x2="9.64" y2="52.5" width="0.127" layer="21"/>
 <wire x1="9.64" y1="52.5" x2="9.64" y2="49.96" width="0.127" layer="21"/>
@@ -871,6 +894,15 @@ Official outline with cutouts for camera flex connector</description>
 <text x="8.6875" y="48.3725" size="1.016" layer="22" font="vector" ratio="10" rot="MR0">1</text>
 <wire x1="8.6875" y1="49.96" x2="9.64" y2="49.96" width="0.127" layer="22"/>
 <text x="57.15" y="48.26" size="1.016" layer="22" font="vector" rot="MR0">Raspberry PI GPIO Port</text>
+<circle x="3.5" y="52.5" radius="3.2" width="0.127" layer="41"/>
+<circle x="61.5" y="52.5" radius="3.2" width="0.127" layer="41"/>
+<circle x="61.5" y="3.5" radius="3.2" width="0.127" layer="41"/>
+<circle x="3.5" y="3.5" radius="3.2" width="0.127" layer="41"/>
+<circle x="3.5" y="52.5" radius="3.2" width="0.127" layer="42"/>
+<circle x="61.5" y="52.5" radius="3.2" width="0.127" layer="42"/>
+<circle x="61.5" y="3.5" radius="3.2" width="0.127" layer="42"/>
+<circle x="3.5" y="3.5" radius="3.2" width="0.127" layer="42"/>
+<wire x1="57.9" y1="49.96" x2="57.9" y2="55.04" width="0.127" layer="21"/>
 </package>
 <package name="RASPI_BOARD_B+_FULL">
 <description>Raspberry Pi board model B+, full outline with position of big connectors &amp;amp; drill holes</description>
@@ -2460,7 +2492,7 @@ All pins connected</description>
 </device>
 </devices>
 </deviceset>
-<deviceset name="XTAL/S" prefix="Q" uservalue="yes">
+<deviceset name="XTAL/S" prefix="XT" uservalue="yes">
 <description>&lt;B&gt;CRYSTAL&lt;/B&gt;</description>
 <gates>
 <gate name="G$1" symbol="XTAL" x="0" y="0"/>
@@ -3679,7 +3711,7 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <part name="C5" library="gen-discrete" deviceset="CAPACITOR" device="2012" value="20p"/>
 <part name="C6" library="gen-discrete" deviceset="CAPACITOR" device="2012" value="10n"/>
 <part name="C7" library="gen-discrete" deviceset="CAPACITOR" device="2012" value="1μ"/>
-<part name="Q1" library="gen-discrete" deviceset="XTAL/S" device="" value="8MHz"/>
+<part name="XT1" library="gen-discrete" deviceset="XTAL/S" device="" value="8MHz"/>
 <part name="R1" library="gen-discrete" deviceset="RESISTOR-US" device="1608" value="1M"/>
 <part name="R2" library="generic" deviceset="RESISTOR-US" device="1608" value="10K"/>
 <part name="YAW" library="connector" deviceset="53047-0510" device=""/>
@@ -3711,7 +3743,7 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <part name="GND11" library="supply1" deviceset="GND" device=""/>
 <part name="+3V4" library="supply1" deviceset="+3V3" device=""/>
 <part name="GND12" library="supply1" deviceset="GND" device=""/>
-<part name="+5V-IN" library="connector" deviceset="MRUSB-2B-D14NI-S306" device=""/>
+<part name="+5V-IN" library="connector" deviceset="MRUSB-2B-D14NI-S306" device="/M" value="MRUSB-2B-D14NI-S306/M"/>
 <part name="P+5" library="supply1" deviceset="+5V" device=""/>
 <part name="GND13" library="supply1" deviceset="GND" device=""/>
 <part name="LED1" library="gen-discrete" deviceset="LED" device="1608"/>
@@ -3752,7 +3784,7 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <instance part="C5" gate="G$1" x="73.66" y="83.82" rot="R90"/>
 <instance part="C6" gate="G$1" x="76.2" y="60.96"/>
 <instance part="C7" gate="G$1" x="87.63" y="60.96"/>
-<instance part="Q1" gate="G$1" x="85.09" y="91.44" rot="R270"/>
+<instance part="XT1" gate="G$1" x="85.09" y="91.44" rot="R270"/>
 <instance part="R1" gate="G$1" x="93.98" y="91.44"/>
 <instance part="R2" gate="G$1" x="101.6" y="33.02"/>
 <instance part="YAW" gate="G$1" x="266.7" y="182.88"/>
@@ -3841,7 +3873,7 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <pinref part="R1" gate="G$1" pin="1"/>
 <wire x1="93.98" y1="96.52" x2="93.98" y2="99.06" width="0.1524" layer="91"/>
 <junction x="93.98" y="99.06"/>
-<pinref part="Q1" gate="G$1" pin="1"/>
+<pinref part="XT1" gate="G$1" pin="1"/>
 <wire x1="85.09" y1="96.52" x2="85.09" y2="99.06" width="0.1524" layer="91"/>
 <junction x="85.09" y="99.06"/>
 <pinref part="CLK" gate="G$1" pin="TP"/>
@@ -3853,7 +3885,7 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <pinref part="R1" gate="G$1" pin="2"/>
 <wire x1="93.98" y1="86.36" x2="93.98" y2="83.82" width="0.1524" layer="91"/>
 <wire x1="85.09" y1="83.82" x2="93.98" y2="83.82" width="0.1524" layer="91"/>
-<pinref part="Q1" gate="G$1" pin="2"/>
+<pinref part="XT1" gate="G$1" pin="2"/>
 <wire x1="85.09" y1="86.36" x2="85.09" y2="83.82" width="0.1524" layer="91"/>
 <junction x="85.09" y="83.82"/>
 <pinref part="C5" gate="G$1" pin="2"/>
@@ -4369,7 +4401,7 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <wire x1="344.17" y1="148.59" x2="344.17" y2="156.21" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$1" class="0">
+<net name="PA2" class="0">
 <segment>
 <pinref part="IC1" gate="MCU" pin="PA2"/>
 <pinref part="AUX" gate="A" pin="1"/>
@@ -4377,7 +4409,7 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <wire x1="170.18" y1="43.18" x2="170.18" y2="113.03" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$2" class="0">
+<net name="PA3" class="0">
 <segment>
 <pinref part="IC1" gate="MCU" pin="PA3"/>
 <pinref part="AUX" gate="A" pin="2"/>
@@ -4385,7 +4417,7 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <wire x1="167.64" y1="45.72" x2="167.64" y2="113.03" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$4" class="0">
+<net name="PA5" class="0">
 <segment>
 <pinref part="IC1" gate="MCU" pin="PA5"/>
 <pinref part="AUX" gate="A" pin="4"/>
@@ -4393,7 +4425,7 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <wire x1="162.56" y1="50.8" x2="162.56" y2="113.03" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$5" class="0">
+<net name="PA7" class="0">
 <segment>
 <pinref part="IC1" gate="MCU" pin="PA7"/>
 <pinref part="AUX" gate="A" pin="5"/>
@@ -4401,7 +4433,7 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <wire x1="160.02" y1="55.88" x2="160.02" y2="113.03" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$6" class="0">
+<net name="PB0" class="0">
 <segment>
 <pinref part="IC1" gate="MCU" pin="PB0"/>
 <pinref part="AUX" gate="A" pin="6"/>
@@ -4409,7 +4441,7 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <wire x1="157.48" y1="81.28" x2="157.48" y2="113.03" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$7" class="0">
+<net name="PB1" class="0">
 <segment>
 <pinref part="IC1" gate="MCU" pin="PB1"/>
 <pinref part="AUX" gate="A" pin="7"/>
@@ -4417,7 +4449,7 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <wire x1="154.94" y1="83.82" x2="154.94" y2="113.03" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$3" class="0">
+<net name="PA4" class="0">
 <segment>
 <pinref part="IC1" gate="MCU" pin="PA4"/>
 <pinref part="AUX" gate="A" pin="3"/>

@@ -132,10 +132,10 @@
 <wire x1="18.7" y1="16.7" x2="18.7" y2="-16.7" width="0.127" layer="21"/>
 <wire x1="18.7" y1="-16.7" x2="-18.7" y2="-16.7" width="0.127" layer="21"/>
 <text x="-12.7" y="13.97" size="1.27" layer="25" font="vector">&gt;NAME</text>
-<hole x="-15.5" y="13.5" drill="1.8"/>
-<hole x="15.5" y="13.5" drill="1.8"/>
-<hole x="15.5" y="-13.5" drill="1.8"/>
-<hole x="-15.5" y="-13.5" drill="1.8"/>
+<hole x="-15.5" y="13.5" drill="1.85"/>
+<hole x="15.5" y="13.5" drill="1.85"/>
+<hole x="15.5" y="-13.5" drill="1.85"/>
+<hole x="-15.5" y="-13.5" drill="1.85"/>
 <circle x="-15.5" y="13.5" radius="1.79605" width="0" layer="41"/>
 <circle x="15.5" y="13.5" radius="1.79605" width="0" layer="41"/>
 <circle x="-15.5" y="-13.5" radius="1.79605" width="0" layer="41"/>
@@ -374,8 +374,8 @@
 </polygon>
 </package>
 <package name="MICRO-USB-POWER/M">
-<smd name="5" x="-1.2" y="-2.1" dx="1.3" dy="2.8" layer="1"/>
-<smd name="1" x="1.2" y="-2.1" dx="1.3" dy="2.8" layer="1"/>
+<smd name="1" x="-1.2" y="-2.1" dx="1.3" dy="2.8" layer="1"/>
+<smd name="5" x="1.2" y="-2.1" dx="1.3" dy="2.8" layer="1"/>
 <hole x="3.7" y="3.5" drill="1.4"/>
 <hole x="-3.7" y="3.5" drill="1.4"/>
 <wire x1="-3.825" y1="-0.575" x2="3.825" y2="-0.575" width="0.127" layer="21"/>
@@ -389,8 +389,8 @@
 USB</text>
 </package>
 <package name="MICRO-USB-POWER">
-<smd name="5" x="-1.2" y="-2.1" dx="0.7" dy="2.8" layer="1"/>
-<smd name="1" x="1.2" y="-2.1" dx="0.7" dy="2.8" layer="1"/>
+<smd name="1" x="-1.2" y="-2.1" dx="0.7" dy="2.8" layer="1"/>
+<smd name="5" x="1.2" y="-2.1" dx="0.7" dy="2.8" layer="1"/>
 <hole x="3.7" y="3.5" drill="1.4"/>
 <hole x="-3.7" y="3.5" drill="1.4"/>
 <wire x1="-3.825" y1="-0.575" x2="3.825" y2="-0.575" width="0.127" layer="21"/>
@@ -3708,8 +3708,8 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 </segment>
 <segment>
 <pinref part="1A" gate="G$1" pin="TP"/>
-<wire x1="374.65" y1="143.51" x2="374.65" y2="142.24" width="0.1524" layer="91"/>
 <label x="374.65" y="125.73" size="1.778" layer="95" rot="R90"/>
+<wire x1="374.65" y1="143.51" x2="374.65" y2="142.24" width="0.1524" layer="91"/>
 <pinref part="R6" gate="G$1" pin="1"/>
 <wire x1="374.65" y1="142.24" x2="374.65" y2="124.46" width="0.1524" layer="91"/>
 <wire x1="378.46" y1="142.24" x2="374.65" y2="142.24" width="0.1524" layer="91"/>
@@ -4097,8 +4097,8 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 </segment>
 <segment>
 <pinref part="1B" gate="G$1" pin="TP"/>
-<wire x1="387.35" y1="143.51" x2="387.35" y2="142.24" width="0.1524" layer="91"/>
 <label x="387.35" y="125.73" size="1.778" layer="95" rot="R90"/>
+<wire x1="387.35" y1="143.51" x2="387.35" y2="142.24" width="0.1524" layer="91"/>
 <pinref part="R7" gate="G$1" pin="1"/>
 <wire x1="387.35" y1="142.24" x2="387.35" y2="124.46" width="0.1524" layer="91"/>
 <wire x1="391.16" y1="142.24" x2="387.35" y2="142.24" width="0.1524" layer="91"/>
@@ -4119,8 +4119,8 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 </segment>
 <segment>
 <pinref part="2A" gate="G$1" pin="TP"/>
-<wire x1="400.05" y1="143.51" x2="400.05" y2="142.24" width="0.1524" layer="91"/>
 <label x="400.05" y="125.73" size="1.778" layer="95" rot="R90"/>
+<wire x1="400.05" y1="143.51" x2="400.05" y2="142.24" width="0.1524" layer="91"/>
 <pinref part="R8" gate="G$1" pin="1"/>
 <wire x1="400.05" y1="142.24" x2="400.05" y2="124.46" width="0.1524" layer="91"/>
 <wire x1="403.86" y1="142.24" x2="400.05" y2="142.24" width="0.1524" layer="91"/>
@@ -4140,8 +4140,8 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 </segment>
 <segment>
 <pinref part="2B" gate="G$1" pin="TP"/>
-<wire x1="412.75" y1="143.51" x2="412.75" y2="142.24" width="0.1524" layer="91"/>
 <label x="412.75" y="125.73" size="1.778" layer="95" rot="R90"/>
+<wire x1="412.75" y1="143.51" x2="412.75" y2="142.24" width="0.1524" layer="91"/>
 <pinref part="R9" gate="G$1" pin="1"/>
 <wire x1="412.75" y1="142.24" x2="412.75" y2="124.46" width="0.1524" layer="91"/>
 <wire x1="416.56" y1="142.24" x2="412.75" y2="142.24" width="0.1524" layer="91"/>

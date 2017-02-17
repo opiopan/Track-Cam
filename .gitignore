@@ -1,4 +1,5 @@
 *.?#[0-9#]
+*.zip
 /Track-Cam.GBL
 /Track-Cam.GBO
 /Track-Cam.GBP

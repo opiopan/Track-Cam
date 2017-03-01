@@ -3442,7 +3442,7 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <part name="C6" library="gen-discrete" deviceset="CAPACITOR" device="2012" value="10n"/>
 <part name="C7" library="gen-discrete" deviceset="CAPACITOR" device="2012" value="1μ"/>
 <part name="XT1" library="gen-discrete" deviceset="XTAL/S" device="" value="8MHz"/>
-<part name="R1" library="gen-discrete" deviceset="RESISTOR-US" device="2012" value="300K"/>
+<part name="R1" library="gen-discrete" deviceset="RESISTOR-US" device="2012" value="100"/>
 <part name="R2" library="gen-discrete" deviceset="RESISTOR-US" device="2012" value="10K"/>
 <part name="YAW" library="connector" deviceset="53047-0510" device=""/>
 <part name="PITCH" library="connector" deviceset="53047-0510" device=""/>
@@ -3478,8 +3478,8 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <part name="GND13" library="supply1" deviceset="GND" device=""/>
 <part name="LED1" library="gen-discrete" deviceset="LED" device="1608"/>
 <part name="LED2" library="gen-discrete" deviceset="LED" device="1608"/>
-<part name="R3" library="gen-discrete" deviceset="RESISTOR-US" device="2012" value="300"/>
-<part name="R4" library="gen-discrete" deviceset="RESISTOR-US" device="2012" value="100"/>
+<part name="R3" library="gen-discrete" deviceset="RESISTOR-US" device="2012" value="100"/>
+<part name="R4" library="gen-discrete" deviceset="RESISTOR-US" device="2012" value="330"/>
 <part name="GND14" library="supply1" deviceset="GND" device=""/>
 <part name="GND" library="testpad" deviceset="TP" device="B1,27"/>
 <part name="VDD" library="testpad" deviceset="TP" device="B1,27"/>
@@ -3515,6 +3515,9 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <sheets>
 <sheet>
 <plain>
+<text x="302.26" y="91.44" size="1.524" layer="96" rot="R90">OSBL1608C1A</text>
+<text x="331.47" y="91.44" size="1.524" layer="96" rot="R90">OSHR1608C1A</text>
+<text x="396.24" y="173.99" size="1.524" layer="96">OSTG1608C1A</text>
 </plain>
 <instances>
 <instance part="IC1" gate="MCU" x="127" y="71.12"/>
@@ -3557,7 +3560,7 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <instance part="GND10" gate="1" x="308.61" y="139.7"/>
 <instance part="GND11" gate="1" x="316.23" y="186.69"/>
 <instance part="+3V4" gate="G$1" x="326.39" y="194.31"/>
-<instance part="GND12" gate="1" x="359.41" y="157.48"/>
+<instance part="GND12" gate="1" x="379.73" y="158.75"/>
 <instance part="+5V-IN" gate="G$1" x="151.13" y="134.62"/>
 <instance part="P+5" gate="1" x="140.97" y="144.78"/>
 <instance part="GND13" gate="1" x="140.97" y="127"/>
@@ -3575,34 +3578,34 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <instance part="+3V5" gate="G$1" x="139.7" y="189.23"/>
 <instance part="POS1" gate="G$1" x="189.23" y="180.34" rot="R180"/>
 <instance part="POS2" gate="G$1" x="203.2" y="180.34" rot="R180"/>
-<instance part="1A" gate="G$1" x="400.05" y="143.51" rot="R90"/>
-<instance part="1B" gate="G$1" x="412.75" y="143.51" rot="R90"/>
-<instance part="2A" gate="G$1" x="425.45" y="143.51" rot="R90"/>
-<instance part="2B" gate="G$1" x="438.15" y="143.51" rot="R90"/>
-<instance part="R5" gate="G$1" x="370.84" y="163.83" rot="R90"/>
-<instance part="LED3" gate="G$1" x="383.54" y="163.83" rot="R90"/>
-<instance part="GND15" gate="1" x="386.08" y="158.75"/>
-<instance part="XMTR" gate="G$1" x="370.84" y="146.05"/>
-<instance part="R6" gate="G$1" x="406.4" y="137.16"/>
-<instance part="GND16" gate="1" x="406.4" y="128.27"/>
-<instance part="R7" gate="G$1" x="419.1" y="137.16"/>
-<instance part="GND17" gate="1" x="419.1" y="128.27"/>
-<instance part="R8" gate="G$1" x="431.8" y="137.16"/>
-<instance part="GND18" gate="1" x="431.8" y="128.27"/>
-<instance part="R9" gate="G$1" x="444.5" y="137.16"/>
-<instance part="GND19" gate="1" x="444.5" y="128.27"/>
-<instance part="R10" gate="G$1" x="346.71" y="139.7"/>
-<instance part="R11" gate="G$1" x="332.74" y="139.7"/>
-<instance part="GND20" gate="1" x="332.74" y="130.81"/>
-<instance part="R12" gate="G$1" x="356.87" y="138.43"/>
-<instance part="GND21" gate="1" x="356.87" y="129.54"/>
+<instance part="1A" gate="G$1" x="388.62" y="104.14" rot="R270"/>
+<instance part="1B" gate="G$1" x="375.92" y="104.14" rot="R270"/>
+<instance part="2A" gate="G$1" x="363.22" y="104.14" rot="R270"/>
+<instance part="2B" gate="G$1" x="350.52" y="104.14" rot="R270"/>
+<instance part="R5" gate="G$1" x="391.16" y="165.1" rot="R90"/>
+<instance part="LED3" gate="G$1" x="403.86" y="165.1" rot="R90"/>
+<instance part="GND15" gate="1" x="406.4" y="160.02"/>
+<instance part="XMTR" gate="G$1" x="391.16" y="147.32"/>
+<instance part="R6" gate="G$1" x="382.27" y="110.49" rot="R180"/>
+<instance part="GND16" gate="1" x="382.27" y="119.38" rot="R180"/>
+<instance part="R7" gate="G$1" x="369.57" y="110.49" rot="R180"/>
+<instance part="GND17" gate="1" x="369.57" y="119.38" rot="R180"/>
+<instance part="R8" gate="G$1" x="356.87" y="110.49" rot="R180"/>
+<instance part="GND18" gate="1" x="356.87" y="119.38" rot="R180"/>
+<instance part="R9" gate="G$1" x="344.17" y="110.49" rot="R180"/>
+<instance part="GND19" gate="1" x="344.17" y="119.38" rot="R180"/>
+<instance part="R10" gate="G$1" x="367.03" y="140.97"/>
+<instance part="R11" gate="G$1" x="353.06" y="140.97"/>
+<instance part="GND20" gate="1" x="353.06" y="132.08"/>
+<instance part="R12" gate="G$1" x="377.19" y="139.7"/>
+<instance part="GND21" gate="1" x="377.19" y="130.81"/>
 </instances>
 <busses>
 <bus name="DIG[0..12]">
 <segment>
 <wire x1="83.82" y1="16.51" x2="208.28" y2="16.51" width="0.762" layer="92"/>
 <wire x1="208.28" y1="16.51" x2="208.28" y2="124.46" width="0.762" layer="92"/>
-<wire x1="208.28" y1="124.46" x2="444.5" y2="124.46" width="0.762" layer="92"/>
+<wire x1="208.28" y1="124.46" x2="412.75" y2="124.46" width="0.762" layer="92"/>
 </segment>
 </bus>
 <bus name="ANA[0..1]">
@@ -3705,11 +3708,11 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 </segment>
 <segment>
 <pinref part="XMTR" gate="G$1" pin="4"/>
-<wire x1="365.76" y1="143.51" x2="365.76" y2="124.46" width="0.1524" layer="91"/>
-<label x="365.76" y="125.73" size="1.778" layer="95" rot="R90"/>
+<wire x1="386.08" y1="144.78" x2="386.08" y2="124.46" width="0.1524" layer="91"/>
+<label x="386.08" y="125.73" size="1.778" layer="95" rot="R90"/>
 <pinref part="R12" gate="G$1" pin="1"/>
-<wire x1="365.76" y1="143.51" x2="356.87" y2="143.51" width="0.1524" layer="91"/>
-<junction x="365.76" y="143.51"/>
+<wire x1="386.08" y1="144.78" x2="377.19" y2="144.78" width="0.1524" layer="91"/>
+<junction x="386.08" y="144.78"/>
 </segment>
 </net>
 <net name="MOTOR1_F" class="0">
@@ -3726,12 +3729,12 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 </segment>
 <segment>
 <pinref part="1A" gate="G$1" pin="TP"/>
-<label x="402.59" y="125.73" size="1.778" layer="95" rot="R90"/>
-<wire x1="402.59" y1="143.51" x2="402.59" y2="142.24" width="0.1524" layer="91"/>
+<label x="386.08" y="121.92" size="1.778" layer="95" rot="R270"/>
+<wire x1="386.08" y1="104.14" x2="386.08" y2="105.41" width="0.1524" layer="91"/>
 <pinref part="R6" gate="G$1" pin="1"/>
-<wire x1="402.59" y1="142.24" x2="402.59" y2="124.46" width="0.1524" layer="91"/>
-<wire x1="406.4" y1="142.24" x2="402.59" y2="142.24" width="0.1524" layer="91"/>
-<junction x="402.59" y="142.24"/>
+<wire x1="386.08" y1="105.41" x2="386.08" y2="124.46" width="0.1524" layer="91"/>
+<wire x1="382.27" y1="105.41" x2="386.08" y2="105.41" width="0.1524" layer="91"/>
+<junction x="386.08" y="105.41"/>
 </segment>
 </net>
 <net name="SWDIO" class="0">
@@ -4055,45 +4058,45 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <segment>
 <pinref part="LED3" gate="G$1" pin="K"/>
 <pinref part="GND15" gate="1" pin="GND"/>
-<wire x1="386.08" y1="163.83" x2="386.08" y2="161.29" width="0.1524" layer="91"/>
+<wire x1="406.4" y1="165.1" x2="406.4" y2="162.56" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="R6" gate="G$1" pin="2"/>
 <pinref part="GND16" gate="1" pin="GND"/>
-<wire x1="406.4" y1="130.81" x2="406.4" y2="132.08" width="0.1524" layer="91"/>
+<wire x1="382.27" y1="116.84" x2="382.27" y2="115.57" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="R7" gate="G$1" pin="2"/>
 <pinref part="GND17" gate="1" pin="GND"/>
-<wire x1="419.1" y1="130.81" x2="419.1" y2="132.08" width="0.1524" layer="91"/>
+<wire x1="369.57" y1="116.84" x2="369.57" y2="115.57" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="R8" gate="G$1" pin="2"/>
 <pinref part="GND18" gate="1" pin="GND"/>
-<wire x1="431.8" y1="130.81" x2="431.8" y2="132.08" width="0.1524" layer="91"/>
+<wire x1="356.87" y1="116.84" x2="356.87" y2="115.57" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="R9" gate="G$1" pin="2"/>
 <pinref part="GND19" gate="1" pin="GND"/>
-<wire x1="444.5" y1="130.81" x2="444.5" y2="132.08" width="0.1524" layer="91"/>
+<wire x1="344.17" y1="116.84" x2="344.17" y2="115.57" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="XMTR" gate="G$1" pin="2"/>
-<wire x1="365.76" y1="148.59" x2="364.49" y2="148.59" width="0.1524" layer="91"/>
-<wire x1="364.49" y1="148.59" x2="364.49" y2="162.56" width="0.1524" layer="91"/>
+<wire x1="386.08" y1="149.86" x2="384.81" y2="149.86" width="0.1524" layer="91"/>
+<wire x1="384.81" y1="149.86" x2="384.81" y2="163.83" width="0.1524" layer="91"/>
 <pinref part="GND12" gate="1" pin="GND"/>
-<wire x1="364.49" y1="162.56" x2="359.41" y2="162.56" width="0.1524" layer="91"/>
-<wire x1="359.41" y1="162.56" x2="359.41" y2="160.02" width="0.1524" layer="91"/>
+<wire x1="384.81" y1="163.83" x2="379.73" y2="163.83" width="0.1524" layer="91"/>
+<wire x1="379.73" y1="163.83" x2="379.73" y2="161.29" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="R11" gate="G$1" pin="2"/>
 <pinref part="GND20" gate="1" pin="GND"/>
-<wire x1="332.74" y1="134.62" x2="332.74" y2="133.35" width="0.1524" layer="91"/>
+<wire x1="353.06" y1="135.89" x2="353.06" y2="134.62" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="R12" gate="G$1" pin="2"/>
 <pinref part="GND21" gate="1" pin="GND"/>
-<wire x1="356.87" y1="133.35" x2="356.87" y2="132.08" width="0.1524" layer="91"/>
+<wire x1="377.19" y1="134.62" x2="377.19" y2="133.35" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="MOTOR2_POS" class="0">
@@ -4127,12 +4130,12 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 </segment>
 <segment>
 <pinref part="1B" gate="G$1" pin="TP"/>
-<label x="415.29" y="125.73" size="1.778" layer="95" rot="R90"/>
-<wire x1="415.29" y1="143.51" x2="415.29" y2="142.24" width="0.1524" layer="91"/>
+<label x="373.38" y="121.92" size="1.778" layer="95" rot="R270"/>
+<wire x1="373.38" y1="104.14" x2="373.38" y2="105.41" width="0.1524" layer="91"/>
 <pinref part="R7" gate="G$1" pin="1"/>
-<wire x1="415.29" y1="142.24" x2="415.29" y2="124.46" width="0.1524" layer="91"/>
-<wire x1="419.1" y1="142.24" x2="415.29" y2="142.24" width="0.1524" layer="91"/>
-<junction x="415.29" y="142.24"/>
+<wire x1="373.38" y1="105.41" x2="373.38" y2="124.46" width="0.1524" layer="91"/>
+<wire x1="369.57" y1="105.41" x2="373.38" y2="105.41" width="0.1524" layer="91"/>
+<junction x="373.38" y="105.41"/>
 </segment>
 </net>
 <net name="MOTOR2_F" class="0">
@@ -4149,12 +4152,12 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 </segment>
 <segment>
 <pinref part="2A" gate="G$1" pin="TP"/>
-<label x="427.99" y="125.73" size="1.778" layer="95" rot="R90"/>
-<wire x1="427.99" y1="143.51" x2="427.99" y2="142.24" width="0.1524" layer="91"/>
+<label x="360.68" y="121.92" size="1.778" layer="95" rot="R270"/>
+<wire x1="360.68" y1="104.14" x2="360.68" y2="105.41" width="0.1524" layer="91"/>
 <pinref part="R8" gate="G$1" pin="1"/>
-<wire x1="427.99" y1="142.24" x2="427.99" y2="124.46" width="0.1524" layer="91"/>
-<wire x1="431.8" y1="142.24" x2="427.99" y2="142.24" width="0.1524" layer="91"/>
-<junction x="427.99" y="142.24"/>
+<wire x1="360.68" y1="105.41" x2="360.68" y2="124.46" width="0.1524" layer="91"/>
+<wire x1="356.87" y1="105.41" x2="360.68" y2="105.41" width="0.1524" layer="91"/>
+<junction x="360.68" y="105.41"/>
 </segment>
 </net>
 <net name="MOTOR2_R" class="0">
@@ -4170,26 +4173,26 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 </segment>
 <segment>
 <pinref part="2B" gate="G$1" pin="TP"/>
-<label x="440.69" y="125.73" size="1.778" layer="95" rot="R90"/>
-<wire x1="440.69" y1="143.51" x2="440.69" y2="142.24" width="0.1524" layer="91"/>
+<label x="347.98" y="121.92" size="1.778" layer="95" rot="R270"/>
+<wire x1="347.98" y1="104.14" x2="347.98" y2="105.41" width="0.1524" layer="91"/>
 <pinref part="R9" gate="G$1" pin="1"/>
-<wire x1="440.69" y1="142.24" x2="440.69" y2="124.46" width="0.1524" layer="91"/>
-<wire x1="444.5" y1="142.24" x2="440.69" y2="142.24" width="0.1524" layer="91"/>
-<junction x="440.69" y="142.24"/>
+<wire x1="347.98" y1="105.41" x2="347.98" y2="124.46" width="0.1524" layer="91"/>
+<wire x1="344.17" y1="105.41" x2="347.98" y2="105.41" width="0.1524" layer="91"/>
+<junction x="347.98" y="105.41"/>
 </segment>
 </net>
 <net name="N$11" class="0">
 <segment>
 <pinref part="R5" gate="G$1" pin="2"/>
 <pinref part="LED3" gate="G$1" pin="A"/>
-<wire x1="375.92" y1="163.83" x2="378.46" y2="163.83" width="0.1524" layer="91"/>
+<wire x1="396.24" y1="165.1" x2="398.78" y2="165.1" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$10" class="0">
 <segment>
 <pinref part="XMTR" gate="G$1" pin="1"/>
 <pinref part="R5" gate="G$1" pin="1"/>
-<wire x1="365.76" y1="151.13" x2="365.76" y2="163.83" width="0.1524" layer="91"/>
+<wire x1="386.08" y1="152.4" x2="386.08" y2="165.1" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$1" class="0">
@@ -4211,23 +4214,23 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 </segment>
 <segment>
 <pinref part="R10" gate="G$1" pin="2"/>
-<wire x1="346.71" y1="134.62" x2="346.71" y2="133.35" width="0.1524" layer="91"/>
-<label x="346.71" y="125.73" size="1.778" layer="95" rot="R90"/>
-<wire x1="346.71" y1="133.35" x2="346.71" y2="124.46" width="0.1524" layer="91"/>
-<wire x1="346.71" y1="133.35" x2="340.36" y2="133.35" width="0.1524" layer="91"/>
-<wire x1="340.36" y1="133.35" x2="340.36" y2="146.05" width="0.1524" layer="91"/>
-<junction x="346.71" y="133.35"/>
+<wire x1="367.03" y1="135.89" x2="367.03" y2="134.62" width="0.1524" layer="91"/>
+<label x="367.03" y="125.73" size="1.778" layer="95" rot="R90"/>
+<wire x1="367.03" y1="134.62" x2="367.03" y2="124.46" width="0.1524" layer="91"/>
+<wire x1="367.03" y1="134.62" x2="360.68" y2="134.62" width="0.1524" layer="91"/>
+<wire x1="360.68" y1="134.62" x2="360.68" y2="147.32" width="0.1524" layer="91"/>
+<junction x="367.03" y="134.62"/>
 <pinref part="R11" gate="G$1" pin="1"/>
-<wire x1="340.36" y1="146.05" x2="332.74" y2="146.05" width="0.1524" layer="91"/>
-<wire x1="332.74" y1="146.05" x2="332.74" y2="144.78" width="0.1524" layer="91"/>
+<wire x1="360.68" y1="147.32" x2="353.06" y2="147.32" width="0.1524" layer="91"/>
+<wire x1="353.06" y1="147.32" x2="353.06" y2="146.05" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="TX_IN_5V" class="0">
 <segment>
 <pinref part="R10" gate="G$1" pin="1"/>
 <pinref part="XMTR" gate="G$1" pin="3"/>
-<wire x1="346.71" y1="144.78" x2="346.71" y2="146.05" width="0.1524" layer="91"/>
-<wire x1="346.71" y1="146.05" x2="365.76" y2="146.05" width="0.1524" layer="91"/>
+<wire x1="367.03" y1="146.05" x2="367.03" y2="147.32" width="0.1524" layer="91"/>
+<wire x1="367.03" y1="147.32" x2="386.08" y2="147.32" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
@@ -4253,11 +4256,10 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <approved hash="104,1,307.34,154.94,IC3,VCC,+5V,,,"/>
 <approved hash="211,1,95.25,16.51,NRST,DIG[0..12],,,,"/>
 <approved hash="211,1,208.28,88.9,NRST,DIG[0..12],,,,"/>
-<approved hash="211,1,208.28,53.34,TRAINER,DIG[0..12],,,,"/>
-<approved hash="211,1,344.17,124.46,TRAINER,DIG[0..12],,,,"/>
+<approved hash="211,1,208.28,53.34,TX_OUT,DIG[0..12],,,,"/>
 <approved hash="211,1,208.28,58.42,MOTOR1_F,DIG[0..12],,,,"/>
 <approved hash="211,1,217.17,124.46,MOTOR1_F,DIG[0..12],,,,"/>
-<approved hash="211,1,374.65,124.46,MOTOR1_F,DIG[0..12],,,,"/>
+<approved hash="211,1,386.08,124.46,MOTOR1_F,DIG[0..12],,,,"/>
 <approved hash="211,1,208.28,71.12,SWDIO,DIG[0..12],,,,"/>
 <approved hash="211,1,208.28,78.74,SWDIO,DIG[0..12],,,,"/>
 <approved hash="211,1,208.28,73.66,SWCLK,DIG[0..12],,,,"/>
@@ -4278,13 +4280,15 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <approved hash="211,1,203.2,203.2,MOTOR2_POS,ANA[0..1],,,,"/>
 <approved hash="211,1,208.28,60.96,MOTOR1_R,DIG[0..12],,,,"/>
 <approved hash="211,1,219.71,124.46,MOTOR1_R,DIG[0..12],,,,"/>
-<approved hash="211,1,387.35,124.46,MOTOR1_R,DIG[0..12],,,,"/>
+<approved hash="211,1,373.38,124.46,MOTOR1_R,DIG[0..12],,,,"/>
 <approved hash="211,1,208.28,63.5,MOTOR2_F,DIG[0..12],,,,"/>
 <approved hash="211,1,281.94,124.46,MOTOR2_F,DIG[0..12],,,,"/>
-<approved hash="211,1,400.05,124.46,MOTOR2_F,DIG[0..12],,,,"/>
+<approved hash="211,1,360.68,124.46,MOTOR2_F,DIG[0..12],,,,"/>
 <approved hash="211,1,208.28,66.04,MOTOR2_R,DIG[0..12],,,,"/>
 <approved hash="211,1,284.48,124.46,MOTOR2_R,DIG[0..12],,,,"/>
-<approved hash="211,1,412.75,124.46,MOTOR2_R,DIG[0..12],,,,"/>
+<approved hash="211,1,347.98,124.46,MOTOR2_R,DIG[0..12],,,,"/>
+<approved hash="211,1,208.28,50.8,TX_IN,DIG[0..12],,,,"/>
+<approved hash="211,1,367.03,124.46,TX_IN,DIG[0..12],,,,"/>
 </errors>
 </schematic>
 </drawing>

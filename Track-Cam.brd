@@ -8035,7 +8035,7 @@ design rules under a new name.</description>
 <attribute name="VALUE" x="16.383" y="48.26" size="1.27" layer="27" font="vector" rot="R270"/>
 <attribute name="NAME" x="20.447" y="43.2435" size="1.016" layer="25" font="vector" align="bottom-center"/>
 </element>
-<element name="R1" library="gen-discrete" package="SMD2012" value="300K" x="26.67" y="41.91" smashed="yes">
+<element name="R1" library="gen-discrete" package="SMD2012" value="100" x="26.67" y="41.91" smashed="yes">
 <attribute name="NAME" x="23.838" y="43.0045" size="1.016" layer="25" font="vector" rot="R270"/>
 <attribute name="VALUE" x="25.87" y="40.26" size="1.016" layer="27"/>
 </element>
@@ -8053,11 +8053,11 @@ design rules under a new name.</description>
 <attribute name="NAME" x="53.8735" y="47.894" size="1.016" layer="25" font="vector"/>
 <attribute name="VALUE" x="51.27" y="46.56" size="1.016" layer="27"/>
 </element>
-<element name="R3" library="gen-discrete" package="SMD2012" value="300" x="46.355" y="45.085" smashed="yes">
+<element name="R3" library="gen-discrete" package="SMD2012" value="100" x="46.355" y="45.085" smashed="yes">
 <attribute name="NAME" x="44.212" y="44.3725" size="1.016" layer="25" font="vector" align="bottom-right"/>
 <attribute name="VALUE" x="45.355" y="43.185" size="1.016" layer="27" font="vector"/>
 </element>
-<element name="R4" library="gen-discrete" package="SMD2012" value="100" x="46.355" y="47.625" smashed="yes">
+<element name="R4" library="gen-discrete" package="SMD2012" value="330" x="46.355" y="47.625" smashed="yes">
 <attribute name="NAME" x="44.339" y="46.9125" size="1.016" layer="25" font="vector" align="bottom-right"/>
 <attribute name="VALUE" x="45.355" y="45.725" size="1.016" layer="27" font="vector"/>
 </element>

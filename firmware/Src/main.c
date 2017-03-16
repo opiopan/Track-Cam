@@ -36,6 +36,7 @@
 
 /* USER CODE BEGIN Includes */
 #include "Servo.h"
+#include "LED.h"
 #include "HostComm.h"
 /* USER CODE END Includes */
 
@@ -46,10 +47,12 @@ DMA_HandleTypeDef hdma_adc;
 I2C_HandleTypeDef hi2c1;
 
 TIM_HandleTypeDef htim1;
+TIM_HandleTypeDef htim2;
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 static ServoHandle hservo;
+static LEDHandle hled;
 static HostCommHandle hcomm;
 
 static uint8_t rxbuff[64];
@@ -64,6 +67,7 @@ static void MX_DMA_Init(void);
 static void MX_ADC_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_TIM1_Init(void);
+static void MX_TIM2_Init(void);
 
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
                                 
@@ -98,23 +102,42 @@ int main(void)
   MX_ADC_Init();
   MX_I2C1_Init();
   MX_TIM1_Init();
+  MX_TIM2_Init();
 
   /* USER CODE BEGIN 2 */
+  if (initLED(&hled, &htim2, GPIOB, GPIO_PIN_3, GPIOB, GPIO_PIN_4) != HAL_OK){
+	  Error_Handler();
+  }
   if (initServo(&hservo, &htim1, &hadc) != HAL_OK){
 	  Error_Handler();
   }
-  if (initHostComm(&hcomm, &hservo) != HAL_OK){
+  if (initHostComm(&hcomm, &hled, &hservo) != HAL_OK){
 	  Error_Handler();
   }
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  startLED(&hled);
+  LED_CONFIG(&hled, LED_SEQ_LEVEL_MASTER).type[LED_BLUE] = LED_SEQ_TYPE_ON;
+  commitLEDConfig(&hled, LED_SEQ_LEVEL_MASTER);
+  HAL_Delay(700);
+  LED_CONFIG(&hled, LED_SEQ_LEVEL_MASTER).type[LED_RED] = LED_SEQ_TYPE_ON;
+  commitLEDConfig(&hled, LED_SEQ_LEVEL_MASTER);
+  HAL_Delay(700);
+  LED_CONFIG(&hled, LED_SEQ_LEVEL_MASTER).type[LED_BLUE] = LED_SEQ_TYPE_OFF;
+  LED_CONFIG(&hled, LED_SEQ_LEVEL_MASTER).type[LED_RED] = LED_SEQ_TYPE_OFF;
+  commitLEDConfig(&hled, LED_SEQ_LEVEL_MASTER);
+  HAL_Delay(700);
+
   startServo(&hservo);
+  LED_CONFIG(&hled, LED_SEQ_LEVEL_MASTER).type[LED_BLUE] = LED_SEQ_TYPE_SERVO_IDLE;
+  LED_CONFIG(&hled, LED_SEQ_LEVEL_MASTER).type[LED_RED] = LED_SEQ_TYPE_SERVO_IDLE;
+  commitLEDConfig(&hled, LED_SEQ_LEVEL_MASTER);
 
   while (1) {
       HAL_I2C_Slave_Receive(&hi2c1, rxbuff, sizeof(rxbuff), HAL_MAX_DELAY);
-      int rxsize = sizeof(rxbuff) - hi2c1.XferCount > 0;
+      int rxsize = sizeof(rxbuff) - hi2c1.XferCount;
       if (rxsize > 0){
     	  int txsize = processHostCommand(&hcomm, rxbuff, rxsize, txbuff, sizeof(txbuff));
     	  if (txsize > 0){
@@ -332,6 +355,39 @@ static void MX_TIM1_Init(void)
 
 }
 
+/* TIM2 init function */
+static void MX_TIM2_Init(void)
+{
+
+  TIM_ClockConfigTypeDef sClockSourceConfig;
+  TIM_MasterConfigTypeDef sMasterConfig;
+
+  htim2.Instance = TIM2;
+  htim2.Init.Prescaler = 48000 - 1;
+  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim2.Init.Period = 50 - 1;
+  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+}
+
 /** 
   * Enable DMA controller clock
   */
@@ -393,7 +449,19 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+	if (htim == &htim2){
+		scheduleLED(&hled);
+	}
+}
 
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* handle)
+{
+	if (handle == &hadc){
+		scheduleServo(&hservo);
+	}
+}
 /* USER CODE END 4 */
 
 /**

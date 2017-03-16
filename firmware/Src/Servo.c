@@ -96,25 +96,27 @@ int startServo(ServoHandle* handle)
  *-------------------------------------------------------------*/
 #define RAWPOS(ch, index) posDmaBuffer[(index) * SERVO_NUM + (ch)]
 
-void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
+void scheduleServo(ServoHandle* handle)
 {
+	volatile ServoContext* context = handle->context;
+
 	// reflect configuration change
-	if (servoContext.needToUpdate){
-		servoContext.configSet = servoContext.nextConfigSet[servoContext.needToUpdate - 1];
-		servoContext.needToUpdate = 0;
+	if (context->needToUpdate){
+		context->configSet = context->nextConfigSet[context->needToUpdate - 1];
+		context->needToUpdate = 0;
 	}
 
 	// correct position
 	int rawPos0 = RAWPOS(0, POS_DMA_CH_BUFFER_SIZE - 1);
 	int rawPos1 = RAWPOS(1, POS_DMA_CH_BUFFER_SIZE - 1);
-	if (servoContext.configSet.config[0].mode == SERVO_IDLE){
+	if (context->configSet.config[0].mode == SERVO_IDLE){
 		int i;
 		for (i = 0; i < POS_DMA_CH_BUFFER_SIZE -1; i++){
 			rawPos0 += RAWPOS(0, i);
 		}
 		rawPos0 /= POS_DMA_CH_BUFFER_SIZE;
 	}
-	if (servoContext.configSet.config[1].mode == SERVO_IDLE){
+	if (context->configSet.config[1].mode == SERVO_IDLE){
 		int i;
 		for (i = 0; i < POS_DMA_CH_BUFFER_SIZE -1; i++){
 			rawPos1 += RAWPOS(1, i);
@@ -122,8 +124,8 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 		rawPos1 /= POS_DMA_CH_BUFFER_SIZE;
 	}
 
-	servoContext.position[0].posRaw = rawPos0;
-	servoContext.position[1].posRaw = rawPos1;
+	context->position[0].posRaw = rawPos0;
+	context->position[1].posRaw = rawPos1;
 
 	//
 }

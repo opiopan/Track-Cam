@@ -6,8 +6,7 @@
  */
 
 #include "HostComm.h"
-
-
+#include <string.h>
 
 #ifdef __ARM_BIG_ENDIAN
 #define htonl(x) (uint32_t)(x)
@@ -176,10 +175,42 @@ static int setServoDeltaThetaDuty(HostCommHandle* handle, uint8_t cmd,
 	return 0;
 }
 
+static int setLEDMode(HostCommHandle* handle, uint8_t cmd,
+		uint8_t* arg, int alen, uint8_t* respBuf, int rblen)
+{
+	if (alen != sizeof(ArgSetLEDMode)){
+		return 0;
+	}
+	ArgSetLEDMode* in = (ArgSetLEDMode*)arg;
+
+	int i;
+	for (i = 0; i < LED_NUM; i++){
+		LEDConfig* config = &LED_CONFIG(handle->led, LED_SEQ_LEVEL_USER);
+		config->type[i] = in->mode[i];
+	}
+	commitLEDConfig(handle->led, LED_SEQ_LEVEL_USER);
+
+	return 0;
+}
+
+static int registerLEDSequence(HostCommHandle* handle, uint8_t cmd,
+		uint8_t* arg, int alen, uint8_t* respBuf, int rblen)
+{
+	if (alen != sizeof(ArgRegisterLEDSequence)){
+		return 0;
+	}
+	ArgRegisterLEDSequence* in = (ArgRegisterLEDSequence*)arg;
+
+	handle->led->userSeq = in->sequence;
+	commitLEDUserSeq(handle->led);
+
+	return 0;
+}
+
 /*---------------------------------------------------------------
  * Dispatch table
  *-------------------------------------------------------------*/
-struct {
+static struct {
 	int command;
 	int (*func)(HostCommHandle* handle, uint8_t cmd,
 			uint8_t* arg, int alen, uint8_t* respBuf, int rblen);
@@ -196,14 +227,25 @@ struct {
 	{CMD_SET_SERVO_DUTY, setServoDuty},
 	{CMD_SET_SERVO_THETA_DUTY, setServoThetaDuty},
 	{CMD_SET_SERVO_DELTA_THETA_DUTY, setServoDeltaThetaDuty},
-	{0, NULL}
+	{CMD_SET_LED_MODE, setLEDMode},
+	{CMD_REGISTER_LED_SEQUENCE, registerLEDSequence},
+	{CMD_INVALID, NULL}
 };
+
+static uint8_t dispatchIdx[256];
 
 /*---------------------------------------------------------------
  * Host Communication functions
  *-------------------------------------------------------------*/
-int initHostComm(HostCommHandle* handle, ServoHandle* servo)
+int initHostComm(HostCommHandle* handle, LEDHandle* led, ServoHandle* servo)
 {
+	memset(dispatchIdx, CMD_INVALID, sizeof(dispatchIdx));
+	int i;
+	for (i = 0; dispatch[i].func; i++){
+		dispatchIdx[dispatch[i].command] = i;
+	}
+
+	handle->led = led;
 	handle->servo = servo;
 	return 0;
 }
@@ -221,11 +263,9 @@ int processHostCommand(HostCommHandle* handle, uint8_t* in, int inLength,
 		return 0;
 	}
 
-	int i;
-	for (i = 0; dispatch[i].func; i++){
-		if (dispatch[i].command == in[0]){
-			return dispatch[i].func(handle, in[0], in + 1, inLength - 1, outBuf, outBufLength);
-		}
+	uint8_t idx = dispatchIdx[in[0]];
+	if (idx != CMD_INVALID){
+		return dispatch[idx].func(handle, in[0], in + 1, inLength - 1, outBuf, outBufLength);
 	}
 	return 0;
 }

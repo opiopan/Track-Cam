@@ -9,26 +9,13 @@
 #define SERVO_H_
 
 #include "project.h"
-
-#define SERVO_NUM 2
-
-#define SERVO_CH_YAW 0
-#define SERVO_CH_PITCH 1
-
-#define SERVO_POS_MAX (2048 - 1)
+#include "ServoCommon.h"
 
 typedef enum {
 	SERVO_STATE_NONE = 0,
 	SERVO_STATE_INIT,
 	SERVO_STATE_RUNNING,
 } SERVO_STATE;
-
-typedef enum {
-	SERVO_IDLE,
-	SERVO_THETA,
-	SERVO_DUTY,
-	SERVO_THETA_DUTY
-} SERVO_MODE;
 
 typedef struct {
 	SERVO_MODE mode;
@@ -65,6 +52,7 @@ int initServo(ServoHandle* handle, TIM_HandleTypeDef* timer, ADC_HandleTypeDef* 
 int deinitServo(ServoHandle* handle);
 int startServo(ServoHandle* handle);
 int stopServo(ServoHandle* handle);
+void scheduleServo(ServoHandle* handle);
 
 inline int16_t getServoPosition(ServoHandle* handle, int servo)
 {

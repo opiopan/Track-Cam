@@ -13,7 +13,8 @@
 #define SERVO_CH_YAW 0
 #define SERVO_CH_PITCH 1
 
-#define SERVO_POS_MAX (2048 - 1)
+#define SERVO_POS_MAX (4096 - 1)
+#define SERVO_DUTY_MAX 1024
 
 typedef enum {
 	SERVO_IDLE,

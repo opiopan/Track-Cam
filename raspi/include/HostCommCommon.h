@@ -1,0 +1,1 @@
+../../firmware/Inc/HostCommCommon.h

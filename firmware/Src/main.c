@@ -119,12 +119,13 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   startLED(&hled);
-  LED_CONFIG(&hled, LED_SEQ_LEVEL_MASTER).type[LED_BLUE] = LED_SEQ_TYPE_ON;
-  commitLEDConfig(&hled, LED_SEQ_LEVEL_MASTER);
-  HAL_Delay(700);
+  HAL_Delay(500);
   LED_CONFIG(&hled, LED_SEQ_LEVEL_MASTER).type[LED_RED] = LED_SEQ_TYPE_ON;
   commitLEDConfig(&hled, LED_SEQ_LEVEL_MASTER);
-  HAL_Delay(700);
+  HAL_Delay(1500);
+  LED_CONFIG(&hled, LED_SEQ_LEVEL_MASTER).type[LED_BLUE] = LED_SEQ_TYPE_ON;
+  commitLEDConfig(&hled, LED_SEQ_LEVEL_MASTER);
+  HAL_Delay(1500);
   LED_CONFIG(&hled, LED_SEQ_LEVEL_MASTER).type[LED_BLUE] = LED_SEQ_TYPE_OFF;
   LED_CONFIG(&hled, LED_SEQ_LEVEL_MASTER).type[LED_RED] = LED_SEQ_TYPE_OFF;
   commitLEDConfig(&hled, LED_SEQ_LEVEL_MASTER);
@@ -142,7 +143,7 @@ int main(void)
     	  int txsize = processHostCommand(&hcomm, rxbuff, rxsize, txbuff, sizeof(txbuff));
     	  if (txsize > 0){
     		  if (HAL_I2C_Slave_Transmit(&hi2c1, txbuff, txsize, 500) != HAL_OK){
-    			  __HAL_I2C_GENERATE_NACK(&hi2c1);
+    			  //__HAL_I2C_GENERATE_NACK(&hi2c1);
     		  }
     	  }
       }

@@ -33,6 +33,11 @@ typedef struct {
 }ServoConfigSet;
 
 typedef struct {
+	int16_t min;
+	int16_t max;
+}ServoAdjuster;
+
+typedef struct {
 	SERVO_STATE status;
 	TIM_HandleTypeDef* hTimer;
 	ADC_HandleTypeDef* hAdc;
@@ -41,6 +46,7 @@ typedef struct {
 	int needToUpdate;
 	ServoPosition position[SERVO_NUM];
 	int16_t pwmDuty[SERVO_NUM];
+	ServoAdjuster adjuster[SERVO_NUM];
 } ServoContext;
 
 typedef struct {

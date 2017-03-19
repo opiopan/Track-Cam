@@ -8,15 +8,27 @@
 #include "HostComm.h"
 #include <string.h>
 
+inline uint32_t convNE32(uint16_t* x)
+{
+	uint8_t* in = (uint8_t*)x;
 #ifdef __ARM_BIG_ENDIAN
-#define htonl(x) (uint32_t)(x)
-#define htons(x) (uint16_t)(x)
-#else /* little-endian */
-#define htonl(x) __rev(x)
-inline uint16_t htons(uint16_t x){return ((x & 0xff) << 8) | ((x & 0xff00) >> 8);}
-#endif /* endianness */
-#define ntohl(x) htonl(x)
-#define ntohs(x) htons(x)
+	return ((uint32_t)in[3]) << 24 | ((uint32_t)in[2]) << 16 |
+			((uint32_t)in[1]) << 8 | (uint32_t)in[0];
+#else
+	return ((uint32_t)in[0]) << 24 | ((uint32_t)in[1]) << 16 |
+			((uint32_t)in[2]) << 8 | (uint32_t)in[3];
+#endif
+}
+
+inline uint16_t convNE16(uint16_t* x)
+{
+	uint8_t* in = (uint8_t*)x;
+#ifdef __ARM_BIG_ENDIAN
+	return ((uint16_t)in[1]) << 8 | (uint16_t)in[0];
+#else
+	return ((uint16_t)in[0]) << 8 | (uint16_t)in[1];
+#endif
+}
 
 /*---------------------------------------------------------------
  * Command handler
@@ -40,11 +52,22 @@ static int setServoMode(HostCommHandle* handle, uint8_t cmd,
 		return 0;
 	}
 	uint8_t mode = cmd - CMD_SET_SERVO_MODE_IDLE + SERVO_IDLE;
+	uint8_t lastMode = SERVO_CONFIG(handle->servo, 0).mode;
 	int i;
 	for (i = 0; i < SERVO_NUM; i++){
 		SERVO_CONFIG(handle->servo, i).mode = mode;
 	}
 	commitServoConfig(handle->servo);
+
+	if (lastMode == SERVO_IDLE && mode != SERVO_IDLE){
+		  LED_CONFIG(handle->led, LED_SEQ_LEVEL_MASTER).type[LED_BLUE] = LED_SEQ_TYPE_SERVO_RUNNING;
+		  LED_CONFIG(handle->led, LED_SEQ_LEVEL_MASTER).type[LED_RED] = LED_SEQ_TYPE_SERVO_RUNNING;
+		  commitLEDConfig(handle->led, LED_SEQ_LEVEL_MASTER);
+	}else if (lastMode != SERVO_IDLE && mode == SERVO_IDLE){
+		  LED_CONFIG(handle->led, LED_SEQ_LEVEL_MASTER).type[LED_BLUE] = LED_SEQ_TYPE_SERVO_IDLE;
+		  LED_CONFIG(handle->led, LED_SEQ_LEVEL_MASTER).type[LED_RED] = LED_SEQ_TYPE_SERVO_IDLE;
+		  commitLEDConfig(handle->led, LED_SEQ_LEVEL_MASTER);
+	}
 
 	return 0;
 }
@@ -58,7 +81,8 @@ static int getServoPos(HostCommHandle* handle, uint8_t cmd,
 	RespGetServoPos* resp = (RespGetServoPos*)respBuf;
 	int i;
 	for (i = 0; i < SERVO_NUM; i++){
-		resp->pos[i] = htons(getServoPosition(handle->servo, i));
+		int16_t pos = getServoPosition(handle->servo, i);
+		resp->pos[i] = convNE16((uint16_t*)&pos);
 	}
 	return sizeof(*resp);
 }
@@ -72,7 +96,8 @@ static int getServoPosRaw(HostCommHandle* handle, uint8_t cmd,
 	RespGetServoPosRaw* resp = (RespGetServoPosRaw*)respBuf;
 	int i;
 	for (i = 0; i < SERVO_NUM; i++){
-		resp->posRaw[i] = htons(getServoPositionRaw(handle->servo, i));
+		int16_t pos = getServoPositionRaw(handle->servo, i);
+		resp->posRaw[i] = convNE16((uint16_t*)&pos);
 	}
 	return sizeof(*resp);
 }
@@ -87,7 +112,10 @@ static int setServoTheta(HostCommHandle* handle, uint8_t cmd,
 
 	int i;
 	for (i = 0; i < SERVO_NUM; i++){
-		SERVO_CONFIG(handle->servo, i).target = ntohs(in->theta[i]);
+		int16_t* target = &SERVO_CONFIG(handle->servo, i).target;
+		*target = convNE16((uint16_t*)(in->theta + i));
+		*target = MAX(*target, 0);
+		*target = MIN(*target, SERVO_POS_MAX);
 	}
 
 	commitServoConfig(handle->servo);
@@ -106,7 +134,7 @@ static int setServoDeltaTheta(HostCommHandle* handle, uint8_t cmd,
 	int i;
 	for (i = 0; i < SERVO_NUM; i++){
 		int16_t* target = &SERVO_CONFIG(handle->servo, i).target;
-		*target += ntohs(in->deltaTheta[i]);
+		*target += convNE16((uint16_t*)(in->deltaTheta + i));
 		*target = MAX(*target, 0);
 		*target = MIN(*target, SERVO_POS_MAX);
 	}
@@ -126,7 +154,10 @@ static int setServoDuty(HostCommHandle* handle, uint8_t cmd,
 
 	int i;
 	for (i = 0; i < SERVO_NUM; i++){
-		SERVO_CONFIG(handle->servo, i).duty = ntohs(in->duty[i]);
+		int16_t* duty = &SERVO_CONFIG(handle->servo, i).duty;
+		*duty = convNE16((uint16_t*)(in->duty + i));
+		*duty = MAX(*duty, -SERVO_DUTY_MAX);
+		*duty = MIN(*duty, SERVO_DUTY_MAX);
 	}
 
 	commitServoConfig(handle->servo);
@@ -144,8 +175,14 @@ static int setServoThetaDuty(HostCommHandle* handle, uint8_t cmd,
 
 	int i;
 	for (i = 0; i < SERVO_NUM; i++){
-		SERVO_CONFIG(handle->servo, i).target = ntohs(in->theta[i]);
-		SERVO_CONFIG(handle->servo, i).duty = ntohs(in->duty[i]);
+		int16_t* target = &SERVO_CONFIG(handle->servo, i).target;
+		*target = convNE16((uint16_t*)(in->theta + i));
+		*target = MAX(*target, 0);
+		*target = MIN(*target, SERVO_POS_MAX);
+		int16_t* duty = &SERVO_CONFIG(handle->servo, i).duty;
+		*duty = convNE16((uint16_t*)(in->duty + i));
+		*duty = MAX(*duty, 0);
+		*duty = MIN(*duty, SERVO_DUTY_MAX);
 	}
 
 	commitServoConfig(handle->servo);
@@ -164,10 +201,13 @@ static int setServoDeltaThetaDuty(HostCommHandle* handle, uint8_t cmd,
 	int i;
 	for (i = 0; i < SERVO_NUM; i++){
 		int16_t* target = &SERVO_CONFIG(handle->servo, i).target;
-		*target += ntohs(in->deltaTheta[i]);
+		*target += convNE16((uint16_t*)(in->deltaTheta + i));
 		*target = MAX(*target, 0);
 		*target = MIN(*target, SERVO_POS_MAX);
-		SERVO_CONFIG(handle->servo, i).duty = ntohs(in->duty[i]);
+		int16_t* duty = &SERVO_CONFIG(handle->servo, i).duty;
+		*duty = convNE16((uint16_t*)(in->duty + i));
+		*duty = MAX(*duty, 0);
+		*duty = MIN(*duty, SERVO_DUTY_MAX);
 	}
 
 	commitServoConfig(handle->servo);

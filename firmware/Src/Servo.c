@@ -8,13 +8,22 @@
 #include "Servo.h"
 #include <string.h>
 
-#define PWM_DUTY_MAX 1024
-#define POS_DMA_CH_BUFFER_SIZE 32
+#define SERVO_DUTY_MIN  250
+#define SERVO_DUTY_ERROR 50
+
+#define POS_MAX 3800
+#define POS_MIN 100
+#define POS_ERROR 10
+
+#define SERVO_PD_RATIO_NUMER 2
+#define SERVO_PD_RATIO_DENOM 1
+
+#define POS_DMA_CH_BUFFER_SIZE 4
 #define POS_DMA_BUFFER_SIZE (POS_DMA_CH_BUFFER_SIZE * 2)
 
 static int startMotor(ServoHandle* Handle);
 static int stopMotor(ServoHandle* servo);
-static int setMotor(ServoHandle* servo, int motor, int direction, uint16_t duty);
+static int setMotor(ServoHandle* servo, int motor, int16_t duty);
 
 static volatile ServoContext servoContext;
 static uint16_t posDmaBuffer[POS_DMA_BUFFER_SIZE];
@@ -43,7 +52,9 @@ int initServo(ServoHandle* handle, TIM_HandleTypeDef* timer, ADC_HandleTypeDef* 
 	servoContext.configSet = handle->configSet;
 	servoContext.needToUpdate = 0;
 	for (i = 0; i < SERVO_NUM; i++){
-		servoContext.pwmDuty[0] = 0;
+		servoContext.pwmDuty[i] = 0;
+		servoContext.adjuster[i].min = POS_MIN;
+		servoContext.adjuster[i].max = POS_MAX;
 	}
 
 	return HAL_OK;
@@ -92,10 +103,63 @@ int startServo(ServoHandle* handle)
 }
 
 /*---------------------------------------------------------------
- * DMA interrupt handler of ADC
+ * adjusting potentiometer
  *-------------------------------------------------------------*/
 #define RAWPOS(ch, index) posDmaBuffer[(index) * SERVO_NUM + (ch)]
+static int16_t getRawPos(volatile ServoContext* context, int ch)
+{
+	int rawPos = RAWPOS(ch, POS_DMA_CH_BUFFER_SIZE - 1);
+	if (context->configSet.config[ch].mode == SERVO_IDLE){
+		int i;
+		for (i = 0; i < POS_DMA_CH_BUFFER_SIZE -1; i++){
+			rawPos += RAWPOS(ch, i);
+		}
+		rawPos /= POS_DMA_CH_BUFFER_SIZE;
+	}
+	return rawPos;
+}
 
+static int16_t adjustPos(volatile ServoContext* context, int ch, int16_t raw)
+{
+	return raw;
+}
+
+/*---------------------------------------------------------------
+ * calculating duty rate of PWM
+ *-------------------------------------------------------------*/
+static int16_t calculateDuty(volatile ServoContext* context, int ch){
+	volatile ServoConfig* config = &context->configSet.config[ch];
+
+	int target = config->mode != SERVO_DUTY ? config->target :
+	             config->duty > 0 ? context->adjuster[ch].max :
+	             config->duty < 0 ? context->adjuster[ch].min :
+	             context->position[ch].pos;
+	target = MAX(target, context->adjuster[ch].min);
+	target = MIN(target, context->adjuster[ch].max);
+
+	int diff = config->target - context->position[ch].pos;
+
+	if (diff > -POS_ERROR && diff < POS_ERROR){
+		return 0;
+	}
+
+	int duty = (diff * SERVO_PD_RATIO_NUMER) / SERVO_PD_RATIO_DENOM;
+	int dutymax = config->mode == SERVO_THETA ? SERVO_DUTY_MAX : config->duty;
+	dutymax = dutymax > 0 ? dutymax : -dutymax;
+	if (duty > 0){
+		duty = MAX(duty, SERVO_DUTY_MIN);
+		duty = MIN(duty, dutymax);
+	}else{
+		duty = MIN(duty, -SERVO_DUTY_MIN);
+		duty = MAX(duty, -dutymax);
+	}
+
+	return duty;
+}
+
+/*---------------------------------------------------------------
+ * DMA interrupt handler of ADC
+ *-------------------------------------------------------------*/
 void scheduleServo(ServoHandle* handle)
 {
 	volatile ServoContext* context = handle->context;
@@ -106,28 +170,29 @@ void scheduleServo(ServoHandle* handle)
 		context->needToUpdate = 0;
 	}
 
-	// correct position
-	int rawPos0 = RAWPOS(0, POS_DMA_CH_BUFFER_SIZE - 1);
-	int rawPos1 = RAWPOS(1, POS_DMA_CH_BUFFER_SIZE - 1);
-	if (context->configSet.config[0].mode == SERVO_IDLE){
-		int i;
-		for (i = 0; i < POS_DMA_CH_BUFFER_SIZE -1; i++){
-			rawPos0 += RAWPOS(0, i);
-		}
-		rawPos0 /= POS_DMA_CH_BUFFER_SIZE;
-	}
-	if (context->configSet.config[1].mode == SERVO_IDLE){
-		int i;
-		for (i = 0; i < POS_DMA_CH_BUFFER_SIZE -1; i++){
-			rawPos1 += RAWPOS(1, i);
-		}
-		rawPos1 /= POS_DMA_CH_BUFFER_SIZE;
+	// adjust position
+	int ch;
+	for (ch = 0; ch < SERVO_NUM; ch++){
+		context->position[ch].posRaw = getRawPos(context, ch);
+		context->position[ch].pos = adjustPos(context, ch, context->position[ch].posRaw);
 	}
 
-	context->position[0].posRaw = rawPos0;
-	context->position[1].posRaw = rawPos1;
-
-	//
+	// negative feedback control
+	for (ch = 0; ch < SERVO_NUM; ch++){
+		volatile ServoConfig* config = &context->configSet.config[ch];
+		if (config->mode != SERVO_IDLE){
+			int16_t duty = calculateDuty(context, ch);
+			if ((duty == 0 && config->duty != 0) ||
+				(duty != 0 && config->duty == 0) ||
+				(duty > 0 && config->duty < 0) ||
+				(duty < 0 && config->duty > 0) ||
+				duty - config->duty > SERVO_DUTY_ERROR ||
+				duty - config->duty < -SERVO_DUTY_ERROR){
+				config->duty = duty;
+				setMotor(handle, ch, duty);
+			}
+		}
+	}
 }
 
 /*---------------------------------------------------------------
@@ -158,9 +223,9 @@ static int stopMotor(ServoHandle* servo)
 	return HAL_OK;
 }
 
-static int setMotor(ServoHandle* servo, int motor, int direction, uint16_t duty)
+static int setMotor(ServoHandle* servo, int motor, int16_t duty)
 {
-    __HAL_TIM_SetCompare(servo->context->hTimer, PWM_CH[motor].forward, direction ? duty : 0);
-    __HAL_TIM_SetCompare(servo->context->hTimer, PWM_CH[motor].reverse, direction ? 0 : duty);
+    __HAL_TIM_SetCompare(servo->context->hTimer, PWM_CH[motor].forward, duty > 0 ? duty : 0);
+    __HAL_TIM_SetCompare(servo->context->hTimer, PWM_CH[motor].reverse, duty > 0 ? 0 : -duty);
 	return HAL_OK;
 }

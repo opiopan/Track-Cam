@@ -26,6 +26,8 @@ typedef struct {
 typedef struct {
 	int16_t pos;
 	int16_t posRaw;
+	int16_t posLast;
+	int16_t velocity;
 } ServoPosition;
 
 typedef struct {
@@ -35,6 +37,7 @@ typedef struct {
 typedef struct {
 	int16_t min;
 	int16_t max;
+	int16_t dutyMin;
 }ServoAdjuster;
 
 typedef struct {

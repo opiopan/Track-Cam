@@ -8,7 +8,8 @@
 #include "Servo.h"
 #include <string.h>
 
-#define SERVO_DUTY_MIN  250
+static const int16_t SERVO_DUTY_MIN[] = {220, 350};
+
 #define SERVO_DUTY_ERROR 50
 
 #define POS_MAX 3800
@@ -55,6 +56,7 @@ int initServo(ServoHandle* handle, TIM_HandleTypeDef* timer, ADC_HandleTypeDef* 
 		servoContext.pwmDuty[i] = 0;
 		servoContext.adjuster[i].min = POS_MIN;
 		servoContext.adjuster[i].max = POS_MAX;
+		servoContext.adjuster[i].dutyMin = SERVO_DUTY_MIN[i];
 	}
 
 	return HAL_OK;
@@ -127,6 +129,8 @@ static int16_t adjustPos(volatile ServoContext* context, int ch, int16_t raw)
 /*---------------------------------------------------------------
  * calculating duty rate of PWM
  *-------------------------------------------------------------*/
+volatile int16_t vmax[SERVO_NUM];
+volatile int16_t vmin[SERVO_NUM];
 static int16_t calculateDuty(volatile ServoContext* context, int ch){
 	volatile ServoConfig* config = &context->configSet.config[ch];
 
@@ -138,19 +142,24 @@ static int16_t calculateDuty(volatile ServoContext* context, int ch){
 	target = MIN(target, context->adjuster[ch].max);
 
 	int diff = config->target - context->position[ch].pos;
-
 	if (diff > -POS_ERROR && diff < POS_ERROR){
 		return 0;
 	}
+
+	int16_t velocity = context->position[ch].pos - context->position[ch].posLast;
+	context->position[ch].posLast = context->position[ch].pos;
+	context->position[ch].velocity = velocity;
+	vmax[ch] = MAX(vmax[ch], velocity);
+	vmin[ch] = MIN(vmin[ch], velocity);
 
 	int duty = (diff * SERVO_PD_RATIO_NUMER) / SERVO_PD_RATIO_DENOM;
 	int dutymax = config->mode == SERVO_THETA ? SERVO_DUTY_MAX : config->duty;
 	dutymax = dutymax > 0 ? dutymax : -dutymax;
 	if (duty > 0){
-		duty = MAX(duty, SERVO_DUTY_MIN);
+		duty = MAX(duty, context->adjuster[ch].dutyMin);
 		duty = MIN(duty, dutymax);
 	}else{
-		duty = MIN(duty, -SERVO_DUTY_MIN);
+		duty = MIN(duty, -context->adjuster[ch].dutyMin);
 		duty = MAX(duty, -dutymax);
 	}
 
@@ -180,16 +189,22 @@ void scheduleServo(ServoHandle* handle)
 	// negative feedback control
 	for (ch = 0; ch < SERVO_NUM; ch++){
 		volatile ServoConfig* config = &context->configSet.config[ch];
+		int16_t current = context->pwmDuty[ch];
 		if (config->mode != SERVO_IDLE){
 			int16_t duty = calculateDuty(context, ch);
-			if ((duty == 0 && config->duty != 0) ||
-				(duty != 0 && config->duty == 0) ||
-				(duty > 0 && config->duty < 0) ||
-				(duty < 0 && config->duty > 0) ||
-				duty - config->duty > SERVO_DUTY_ERROR ||
-				duty - config->duty < -SERVO_DUTY_ERROR){
-				config->duty = duty;
+			if ((duty == 0 && current != 0) ||
+				(duty != 0 && current == 0) ||
+				(duty > 0 && current < 0) ||
+				(duty < 0 && current > 0) ||
+				duty - current > SERVO_DUTY_ERROR ||
+				duty - current < -SERVO_DUTY_ERROR){
+				context->pwmDuty[ch] = duty;
 				setMotor(handle, ch, duty);
+			}
+		}else{
+			if (current != 0){
+				context->pwmDuty[ch] = 0;
+				setMotor(handle, ch, 0);
 			}
 		}
 	}

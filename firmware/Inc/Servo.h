@@ -28,6 +28,9 @@ typedef struct {
 	int16_t posRaw;
 	int16_t posLast;
 	int16_t velocity;
+	int16_t diffPast1;
+	int16_t diffPast2;
+	int32_t dutyLast;
 } ServoPosition;
 
 typedef struct {

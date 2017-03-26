@@ -113,8 +113,14 @@ int stopLED(LEDHandle* handle)
 /*---------------------------------------------------------------
  * timer interrupt handler
  *-------------------------------------------------------------*/
+extern volatile int adc_count;
+volatile int adc_count_last;
+volatile int adc_period;
 void scheduleLED(LEDHandle* handle)
 {
+	adc_period = adc_count - adc_count_last;
+	adc_count_last = adc_count;
+
 	volatile LEDContext* context = handle->context;
 
 	/* reflect configuration change */

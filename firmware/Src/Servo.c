@@ -8,9 +8,6 @@
 #include "Servo.h"
 #include <string.h>
 
-static const int16_t SERVO_DUTY_MIN[] = {300, 400};
-//static const int16_t SERVO_DUTY_MIN[] = {0, 0};
-
 #define SERVO_DUTY_ERROR 50
 
 #define POS_MAX 3800
@@ -19,22 +16,19 @@ static const int16_t SERVO_DUTY_MIN[] = {300, 400};
 
 #define VELOCITY_ERROR 10
 
+#define TARGET_BIAS 1000
 #define PID_BIAS 100
-#define KP_NUMER 100
+
+#define KP_NUMER 700
 #define KP_DENOM 1
-#define KI_NUMER 50
+#define KI_NUMER 80
 #define KI_DENOM 1000
-#define KD_NUMER 50
+#define KD_NUMER 90
 #define KD_DENOM 1
 
 #define MUL_RATIONAL(a, b) (((int)(b) * a##_NUMER) / a##_DENOM)
 
-#define SERVO_PD_RATIO_NUMER 3
-#define SERVO_PD_RATIO_DENOM 1
-#define SERVO_VI_RATIO_NUMER -40
-#define SERVO_VI_RATIO_DENOM 1
-
-#define POS_DMA_CH_BUFFER_SIZE 16
+#define POS_DMA_CH_BUFFER_SIZE 6
 #define POS_DMA_BUFFER_SIZE (POS_DMA_CH_BUFFER_SIZE * 2)
 
 static int startMotor(ServoHandle* Handle);
@@ -71,7 +65,6 @@ int initServo(ServoHandle* handle, TIM_HandleTypeDef* timer, ADC_HandleTypeDef* 
 		servoContext.pwmDuty[i] = 0;
 		servoContext.adjuster[i].min = POS_MIN;
 		servoContext.adjuster[i].max = POS_MAX;
-		servoContext.adjuster[i].dutyMin = SERVO_DUTY_MIN[i];
 	}
 
 	return HAL_OK;
@@ -132,6 +125,9 @@ static int16_t getRawPos(volatile ServoContext* context, int ch)
 			rawPos += RAWPOS(ch, i);
 		}
 		rawPos /= POS_DMA_CH_BUFFER_SIZE;
+	}else{
+		int delta = rawPos - RAWPOS(ch, POS_DMA_CH_BUFFER_SIZE - 2);
+		rawPos += (delta * (SERVO_NUM - 1 - ch)) / SERVO_NUM;
 	}
 	return rawPos;
 }
@@ -144,31 +140,39 @@ static int16_t adjustPos(volatile ServoContext* context, int ch, int16_t raw)
 /*---------------------------------------------------------------
  * calculating duty rate of PWM
  *-------------------------------------------------------------*/
-volatile int16_t vmax[SERVO_NUM];
-volatile int16_t vmin[SERVO_NUM];
 static int16_t calculateDuty(volatile ServoContext* context, int ch){
 	volatile ServoConfig* config = &context->configSet.config[ch];
+	volatile ServoPosition* pos = &context->position[ch];
 
-	int target = config->mode != SERVO_DUTY ? config->target :
+	int rtarget = config->target * TARGET_BIAS;
+	int itarget = pos->target;
+	if (itarget != rtarget){
+		if (config->velocity == 0){
+			itarget = rtarget;
+		}else if (rtarget > pos->target){
+			itarget += config->velocity;
+			itarget = MIN(rtarget, itarget);
+		}else{
+			itarget -= config->velocity;
+			itarget = MAX(rtarget, itarget);
+		}
+		pos->target = itarget;
+	}
+
+	int target = config->mode != SERVO_DUTY ? itarget / TARGET_BIAS :
 	             config->duty > 0 ? context->adjuster[ch].max :
 	             config->duty < 0 ? context->adjuster[ch].min :
-	             context->position[ch].pos;
+	             pos->pos;
 	target = MAX(target, context->adjuster[ch].min);
 	target = MIN(target, context->adjuster[ch].max);
 
 	int16_t velocity = context->position[ch].pos - context->position[ch].posLast;
 	context->position[ch].velocity = velocity;
-	vmax[ch] = MAX(vmax[ch], velocity);
-	vmin[ch] = MIN(vmin[ch], velocity);
 
 	int dutymax = config->mode == SERVO_THETA ? SERVO_DUTY_MAX : config->duty;
 	dutymax = dutymax > 0 ? dutymax : -dutymax;
 
-	int diff = config->target - context->position[ch].pos;
-
-#ifndef HEULISTIC
-	volatile ServoPosition* pos = &context->position[ch];
-
+	int diff = target - pos->pos;
 	if (diff > -POS_ERROR && diff < POS_ERROR){
 		diff = 0;
 	}
@@ -195,33 +199,6 @@ static int16_t calculateDuty(volatile ServoContext* context, int ch){
 	}else{
 		duty = MAX(duty, -dutymax);
 	}
-
-#else
-	if (diff > -POS_ERROR && diff < POS_ERROR){
-		return 0;
-	}
-
-	int duty = (diff * SERVO_PD_RATIO_NUMER) / SERVO_PD_RATIO_DENOM +
-			   (velocity * SERVO_VI_RATIO_NUMER) / SERVO_VI_RATIO_DENOM;
-
-	/*
-	if (velocity > -VELOCITY_ERROR && velocity < VELOCITY_ERROR){
-		if ((duty > 0 && duty < context->adjuster[ch].dutyMin) ||
-			(duty < 0 && duty > 0 - context->adjuster[ch].dutyMin)){
-			duty = 0;
-		}
-	}
-	*/
-	if (velocity > -VELOCITY_ERROR && velocity < VELOCITY_ERROR){
-	if (duty > 0 ){
-		duty = MAX(duty, context->adjuster[ch].dutyMin);
-		duty = MIN(duty, dutymax);
-	}else{
-		duty = MIN(duty, -context->adjuster[ch].dutyMin);
-		duty = MAX(duty, -dutymax);
-	}
-	}
-#endif
 
 	return duty;
 }
@@ -268,6 +245,7 @@ void scheduleServo(ServoHandle* handle)
 			context->position[ch].diffPast1 = 0;
 			context->position[ch].diffPast2 = 0;
 			context->position[ch].dutyLast = 0;
+			context->position[ch].target = context->position[ch].pos * TARGET_BIAS;
 			if (current != 0){
 				context->pwmDuty[ch] = 0;
 				setMotor(handle, ch, 0);

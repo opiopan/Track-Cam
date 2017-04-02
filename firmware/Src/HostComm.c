@@ -116,6 +116,7 @@ static int setServoTheta(HostCommHandle* handle, uint8_t cmd,
 		*target = convNE16((uint16_t*)(in->theta + i));
 		*target = MAX(*target, 0);
 		*target = MIN(*target, SERVO_POS_MAX);
+		SERVO_CONFIG(handle->servo,i).velocity = 0;
 	}
 
 	commitServoConfig(handle->servo);
@@ -137,6 +138,7 @@ static int setServoDeltaTheta(HostCommHandle* handle, uint8_t cmd,
 		*target += convNE16((uint16_t*)(in->deltaTheta + i));
 		*target = MAX(*target, 0);
 		*target = MIN(*target, SERVO_POS_MAX);
+		SERVO_CONFIG(handle->servo,i).velocity = 0;
 	}
 
 	commitServoConfig(handle->servo);
@@ -158,6 +160,7 @@ static int setServoDuty(HostCommHandle* handle, uint8_t cmd,
 		*duty = convNE16((uint16_t*)(in->duty + i));
 		*duty = MAX(*duty, -SERVO_DUTY_MAX);
 		*duty = MIN(*duty, SERVO_DUTY_MAX);
+		SERVO_CONFIG(handle->servo,i).velocity = 0;
 	}
 
 	commitServoConfig(handle->servo);
@@ -183,6 +186,7 @@ static int setServoThetaDuty(HostCommHandle* handle, uint8_t cmd,
 		*duty = convNE16((uint16_t*)(in->duty + i));
 		*duty = MAX(*duty, 0);
 		*duty = MIN(*duty, SERVO_DUTY_MAX);
+		SERVO_CONFIG(handle->servo,i).velocity = 0;
 	}
 
 	commitServoConfig(handle->servo);
@@ -208,6 +212,53 @@ static int setServoDeltaThetaDuty(HostCommHandle* handle, uint8_t cmd,
 		*duty = convNE16((uint16_t*)(in->duty + i));
 		*duty = MAX(*duty, 0);
 		*duty = MIN(*duty, SERVO_DUTY_MAX);
+		SERVO_CONFIG(handle->servo,i).velocity = 0;
+	}
+
+	commitServoConfig(handle->servo);
+
+	return 0;
+}
+
+static int setServoThetaVelocity(HostCommHandle* handle, uint8_t cmd,
+		uint8_t* arg, int alen, uint8_t* respBuf, int rblen)
+{
+	if (alen != sizeof(ArgSetServoThetaVelocity)){
+		return 0;
+	}
+	ArgSetServoThetaVelocity* in = (ArgSetServoThetaVelocity*)arg;
+
+	int i;
+	for (i = 0; i < SERVO_NUM; i++){
+		int16_t* target = &SERVO_CONFIG(handle->servo, i).target;
+		*target = convNE16((uint16_t*)(in->theta + i));
+		*target = MAX(*target, 0);
+		*target = MIN(*target, SERVO_POS_MAX);
+		uint16_t* velocity = &SERVO_CONFIG(handle->servo, i).velocity;
+		*velocity = convNE16((uint16_t*)(in->velocity + i));
+	}
+
+	commitServoConfig(handle->servo);
+
+	return 0;
+}
+
+static int setServoDeltaThetaVelocity(HostCommHandle* handle, uint8_t cmd,
+		uint8_t* arg, int alen, uint8_t* respBuf, int rblen)
+{
+	if (alen != sizeof(ArgSetServoDeltaThetaDuty)){
+		return 0;
+	}
+	ArgSetServoDeltaThetaVelocity* in = (ArgSetServoDeltaThetaVelocity*)arg;
+
+	int i;
+	for (i = 0; i < SERVO_NUM; i++){
+		int16_t* target = &SERVO_CONFIG(handle->servo, i).target;
+		*target += convNE16((uint16_t*)(in->deltaTheta + i));
+		*target = MAX(*target, 0);
+		*target = MIN(*target, SERVO_POS_MAX);
+		uint16_t* velocity = &SERVO_CONFIG(handle->servo, i).velocity;
+		*velocity = convNE16((uint16_t*)(in->velocity + i));
 	}
 
 	commitServoConfig(handle->servo);
@@ -260,6 +311,7 @@ static struct {
 	{CMD_SET_SERVO_MODE_THETA, setServoMode},
 	{CMD_SET_SERVO_MODE_DUTY, setServoMode},
 	{CMD_SET_SERVO_MODE_THETA_DUTY, setServoMode},
+
 	{CMD_GET_SERVO_POS, getServoPos},
 	{CMD_GET_SERVO_POS_RAW, getServoPosRaw},
 	{CMD_SET_SERVO_THETA, setServoTheta},
@@ -267,6 +319,9 @@ static struct {
 	{CMD_SET_SERVO_DUTY, setServoDuty},
 	{CMD_SET_SERVO_THETA_DUTY, setServoThetaDuty},
 	{CMD_SET_SERVO_DELTA_THETA_DUTY, setServoDeltaThetaDuty},
+	{CMD_SET_SERVO_THETA_VELOCITY, setServoThetaVelocity},
+	{CMD_SET_SERVO_DELTA_THETA_VELOCITY, setServoDeltaThetaVelocity},
+
 	{CMD_SET_LED_MODE, setLEDMode},
 	{CMD_REGISTER_LED_SEQUENCE, registerLEDSequence},
 	{CMD_INVALID, NULL}

@@ -28,6 +28,8 @@ typedef enum {
 	CMD_SET_SERVO_DUTY,
 	CMD_SET_SERVO_THETA_DUTY,
 	CMD_SET_SERVO_DELTA_THETA_DUTY,
+	CMD_SET_SERVO_THETA_VELOCITY,
+	CMD_SET_SERVO_DELTA_THETA_VELOCITY,
 
 	CMD_SET_LED_MODE = 0x60,
 	CMD_REGISTER_LED_SEQUENCE,
@@ -71,6 +73,16 @@ typedef struct {
 	int16_t deltaTheta[SERVO_NUM];
 	int16_t duty[SERVO_NUM];
 } ArgSetServoDeltaThetaDuty;
+
+typedef struct {
+	int16_t theta[SERVO_NUM];
+	uint16_t velocity[SERVO_NUM];
+} ArgSetServoThetaVelocity;
+
+typedef struct {
+	int16_t deltaTheta[SERVO_NUM];
+	uint16_t velocity[SERVO_NUM];
+} ArgSetServoDeltaThetaVelocity;
 
 typedef struct {
 	int8_t mode[LED_NUM];

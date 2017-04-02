@@ -21,6 +21,7 @@ typedef struct {
 	SERVO_MODE mode;
 	int16_t target;
 	int16_t duty;
+	uint16_t velocity;
 } ServoConfig;
 
 typedef struct {
@@ -31,6 +32,7 @@ typedef struct {
 	int16_t diffPast1;
 	int16_t diffPast2;
 	int32_t dutyLast;
+	int32_t target;
 } ServoPosition;
 
 typedef struct {
@@ -40,7 +42,6 @@ typedef struct {
 typedef struct {
 	int16_t min;
 	int16_t max;
-	int16_t dutyMin;
 }ServoAdjuster;
 
 typedef struct {

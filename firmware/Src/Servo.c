@@ -19,16 +19,16 @@
 #define TARGET_BIAS 1000
 #define PID_BIAS 100
 
-#define KP_NUMER 700
+#define KP_NUMER 900
 #define KP_DENOM 1
-#define KI_NUMER 80
+#define KI_NUMER 300
 #define KI_DENOM 1000
-#define KD_NUMER 90
+#define KD_NUMER 40
 #define KD_DENOM 1
 
 #define MUL_RATIONAL(a, b) (((int)(b) * a##_NUMER) / a##_DENOM)
 
-#define POS_DMA_CH_BUFFER_SIZE 6
+#define POS_DMA_CH_BUFFER_SIZE 16
 #define POS_DMA_BUFFER_SIZE (POS_DMA_CH_BUFFER_SIZE * 2)
 
 static int startMotor(ServoHandle* Handle);

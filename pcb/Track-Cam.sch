@@ -136,14 +136,23 @@
 <hole x="15.5" y="13.5" drill="1.85"/>
 <hole x="15.5" y="-13.5" drill="1.85"/>
 <hole x="-15.5" y="-13.5" drill="1.85"/>
-<circle x="-15.5" y="13.5" radius="1.79605" width="0" layer="41"/>
-<circle x="15.5" y="13.5" radius="1.79605" width="0" layer="41"/>
-<circle x="-15.5" y="-13.5" radius="1.79605" width="0" layer="41"/>
-<circle x="15.5" y="-13.5" radius="1.79605" width="0" layer="41"/>
-<circle x="-15.5" y="13.5" radius="1.79605" width="0" layer="42"/>
-<circle x="15.5" y="13.5" radius="1.79605" width="0" layer="42"/>
-<circle x="-15.5" y="-13.5" radius="1.79605" width="0" layer="42"/>
-<circle x="15.5" y="-13.5" radius="1.79605" width="0" layer="42"/>
+<circle x="-15.5" y="13.5" radius="2.5" width="0" layer="41"/>
+<circle x="15.5" y="13.5" radius="2.5" width="0" layer="41"/>
+<circle x="-15.5" y="-13.5" radius="2.5" width="0" layer="41"/>
+<circle x="15.5" y="-13.5" radius="2.5" width="0" layer="41"/>
+<circle x="-15.5" y="13.5" radius="2.5" width="0" layer="42"/>
+<circle x="15.5" y="13.5" radius="2.5" width="0" layer="42"/>
+<circle x="-15.5" y="-13.5" radius="2.5" width="0" layer="42"/>
+<circle x="15.5" y="-13.5" radius="2.5" width="0" layer="42"/>
+<circle x="-15.5" y="13.5" radius="2.5" width="0" layer="29"/>
+<circle x="15.5" y="13.5" radius="2.5" width="0" layer="29"/>
+<circle x="-15.5" y="-13.5" radius="2.5" width="0" layer="29"/>
+<circle x="15.5" y="-13.5" radius="2.5" width="0" layer="29"/>
+<circle x="-15.5" y="13.5" radius="2.5" width="0" layer="30"/>
+<circle x="15.5" y="13.5" radius="2.5" width="0" layer="30"/>
+<circle x="-15.5" y="-13.5" radius="2.5" width="0" layer="30"/>
+<circle x="15.5" y="-13.5" radius="2.5" width="0" layer="30"/>
+<hole x="-4.7" y="0" drill="8"/>
 </package>
 </packages>
 <symbols>
@@ -378,17 +387,19 @@
 <package name="MICRO-USB-POWER/M">
 <smd name="5" x="-1.2" y="-2.1" dx="1.3" dy="2.8" layer="1"/>
 <smd name="1" x="1.2" y="-2.1" dx="1.3" dy="2.8" layer="1"/>
-<hole x="3.7" y="3.5" drill="1.4"/>
-<hole x="-3.7" y="3.5" drill="1.4"/>
-<wire x1="-3.825" y1="-0.575" x2="3.825" y2="-0.575" width="0.127" layer="21"/>
-<wire x1="3.825" y1="-0.575" x2="3.825" y2="7.575" width="0.127" layer="21"/>
-<wire x1="3.825" y1="7.575" x2="-3.825" y2="7.575" width="0.127" layer="21"/>
-<wire x1="-3.825" y1="7.575" x2="-3.825" y2="-0.575" width="0.127" layer="21"/>
 <rectangle x1="-1.4" y1="-3.435" x2="-1" y2="-0.75" layer="51"/>
 <rectangle x1="1" y1="-3.435" x2="1.4" y2="-0.75" layer="51"/>
 <text x="-0.11409375" y="5.4658" size="1.016" layer="25" font="vector" rot="R180" align="bottom-center">&gt;NAME</text>
 <text x="0" y="0" size="1.016" layer="21" font="vector" align="bottom-center">micro
 USB</text>
+<pad name="FIX1" x="-3.7" y="3.5" drill="1.4" diameter="2.5" shape="square"/>
+<pad name="FIX2" x="3.7" y="3.5" drill="1.4" diameter="2.5" shape="square"/>
+<wire x1="-3.81" y1="4.83" x2="-3.81" y2="7.62" width="0.127" layer="21"/>
+<wire x1="-3.81" y1="7.62" x2="3.81" y2="7.62" width="0.127" layer="21"/>
+<wire x1="3.81" y1="7.62" x2="3.81" y2="4.83" width="0.127" layer="21"/>
+<wire x1="-3.81" y1="2.155" x2="-3.81" y2="-0.635" width="0.127" layer="21"/>
+<wire x1="-3.81" y1="-0.635" x2="3.81" y2="-0.635" width="0.127" layer="21"/>
+<wire x1="3.81" y1="-0.635" x2="3.81" y2="2.155" width="0.127" layer="21"/>
 </package>
 <package name="MICRO-USB-POWER">
 <smd name="5" x="-1.2" y="-2.1" dx="0.7" dy="2.8" layer="1"/>
@@ -3003,15 +3014,15 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <wire x1="-3.5" y1="3.5" x2="3.5" y2="3.5" width="0.127" layer="21"/>
 <wire x1="3.5" y1="3.5" x2="3.5" y2="-3.5" width="0.127" layer="21"/>
 <wire x1="3.5" y1="-3.5" x2="-3.5" y2="-3.5" width="0.127" layer="21"/>
-<smd name="1" x="-2.8" y="-4.675" dx="0.54" dy="1.65" layer="1"/>
-<smd name="2" x="-2" y="-4.675" dx="0.54" dy="1.65" layer="1"/>
-<smd name="3" x="-1.2" y="-4.675" dx="0.54" dy="1.65" layer="1"/>
-<smd name="4" x="-0.4" y="-4.675" dx="0.54" dy="1.65" layer="1"/>
-<smd name="5" x="0.4" y="-4.675" dx="0.54" dy="1.65" layer="1"/>
-<smd name="6" x="1.19" y="-4.675" dx="0.54" dy="1.65" layer="1"/>
-<smd name="7" x="1.99" y="-4.675" dx="0.54" dy="1.65" layer="1"/>
-<smd name="8" x="2.79" y="-4.675" dx="0.54" dy="1.65" layer="1"/>
-<smd name="9" x="4.675" y="-2.8" dx="0.54" dy="1.65" layer="1" rot="R90"/>
+<smd name="1" x="-2.8" y="-4.55" dx="0.54" dy="1.4" layer="1"/>
+<smd name="2" x="-2" y="-4.55" dx="0.54" dy="1.4" layer="1"/>
+<smd name="3" x="-1.2" y="-4.55" dx="0.54" dy="1.4" layer="1"/>
+<smd name="4" x="-0.4" y="-4.55" dx="0.54" dy="1.4" layer="1"/>
+<smd name="5" x="0.4" y="-4.55" dx="0.54" dy="1.4" layer="1"/>
+<smd name="6" x="1.19" y="-4.55" dx="0.54" dy="1.4" layer="1"/>
+<smd name="7" x="1.99" y="-4.55" dx="0.54" dy="1.4" layer="1"/>
+<smd name="8" x="2.79" y="-4.55" dx="0.54" dy="1.4" layer="1"/>
+<smd name="9" x="4.55" y="-2.8" dx="0.54" dy="1.4" layer="1" rot="R90"/>
 <rectangle x1="-2.985" y1="-4.5" x2="-2.615" y2="-3.5" layer="51"/>
 <rectangle x1="-2.185" y1="-4.5" x2="-1.815" y2="-3.5" layer="51"/>
 <rectangle x1="-1.385" y1="-4.5" x2="-1.015" y2="-3.5" layer="51"/>
@@ -3021,51 +3032,51 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <rectangle x1="1.815" y1="-4.5" x2="2.185" y2="-3.5" layer="51"/>
 <rectangle x1="2.615" y1="-4.5" x2="2.985" y2="-3.5" layer="51"/>
 <rectangle x1="3.815" y1="-3.3" x2="4.185" y2="-2.3" layer="51" rot="R90"/>
-<smd name="10" x="4.675" y="-2" dx="0.54" dy="1.65" layer="1" rot="R90"/>
+<smd name="10" x="4.55" y="-2" dx="0.54" dy="1.4" layer="1" rot="R90"/>
 <rectangle x1="3.815" y1="-2.5" x2="4.185" y2="-1.5" layer="51" rot="R90"/>
-<smd name="11" x="4.675" y="-1.2" dx="0.54" dy="1.65" layer="1" rot="R90"/>
+<smd name="11" x="4.55" y="-1.2" dx="0.54" dy="1.4" layer="1" rot="R90"/>
 <rectangle x1="3.815" y1="-1.7" x2="4.185" y2="-0.7" layer="51" rot="R90"/>
-<smd name="12" x="4.675" y="-0.4" dx="0.54" dy="1.65" layer="1" rot="R90"/>
+<smd name="12" x="4.55" y="-0.4" dx="0.54" dy="1.4" layer="1" rot="R90"/>
 <rectangle x1="3.815" y1="-0.9" x2="4.185" y2="0.1" layer="51" rot="R90"/>
-<smd name="13" x="4.675" y="0.4" dx="0.54" dy="1.65" layer="1" rot="R90"/>
+<smd name="13" x="4.55" y="0.4" dx="0.54" dy="1.4" layer="1" rot="R90"/>
 <rectangle x1="3.815" y1="-0.1" x2="4.185" y2="0.9" layer="51" rot="R90"/>
-<smd name="14" x="4.675" y="1.2" dx="0.54" dy="1.65" layer="1" rot="R90"/>
+<smd name="14" x="4.55" y="1.2" dx="0.54" dy="1.4" layer="1" rot="R90"/>
 <rectangle x1="3.815" y1="0.7" x2="4.185" y2="1.7" layer="51" rot="R90"/>
-<smd name="15" x="4.675" y="2" dx="0.54" dy="1.65" layer="1" rot="R90"/>
+<smd name="15" x="4.55" y="2" dx="0.54" dy="1.4" layer="1" rot="R90"/>
 <rectangle x1="3.815" y1="1.5" x2="4.185" y2="2.5" layer="51" rot="R90"/>
-<smd name="16" x="4.675" y="2.8" dx="0.54" dy="1.65" layer="1" rot="R90"/>
+<smd name="16" x="4.55" y="2.8" dx="0.54" dy="1.4" layer="1" rot="R90"/>
 <rectangle x1="3.815" y1="2.3" x2="4.185" y2="3.3" layer="51" rot="R90"/>
-<smd name="17" x="2.8" y="4.675" dx="0.54" dy="1.65" layer="1" rot="R180"/>
+<smd name="17" x="2.8" y="4.55" dx="0.54" dy="1.4" layer="1" rot="R180"/>
 <rectangle x1="2.615" y1="3.5" x2="2.985" y2="4.5" layer="51" rot="R180"/>
-<smd name="18" x="2" y="4.675" dx="0.54" dy="1.65" layer="1" rot="R180"/>
+<smd name="18" x="2" y="4.55" dx="0.54" dy="1.4" layer="1" rot="R180"/>
 <rectangle x1="1.815" y1="3.5" x2="2.185" y2="4.5" layer="51" rot="R180"/>
-<smd name="19" x="1.2" y="4.675" dx="0.54" dy="1.65" layer="1" rot="R180"/>
+<smd name="19" x="1.2" y="4.55" dx="0.54" dy="1.4" layer="1" rot="R180"/>
 <rectangle x1="1.015" y1="3.5" x2="1.385" y2="4.5" layer="51" rot="R180"/>
-<smd name="20" x="0.4" y="4.675" dx="0.54" dy="1.65" layer="1" rot="R180"/>
+<smd name="20" x="0.4" y="4.55" dx="0.54" dy="1.4" layer="1" rot="R180"/>
 <rectangle x1="0.215" y1="3.5" x2="0.585" y2="4.5" layer="51" rot="R180"/>
-<smd name="21" x="-0.4" y="4.675" dx="0.54" dy="1.65" layer="1" rot="R180"/>
+<smd name="21" x="-0.4" y="4.55" dx="0.54" dy="1.4" layer="1" rot="R180"/>
 <rectangle x1="-0.585" y1="3.5" x2="-0.215" y2="4.5" layer="51" rot="R180"/>
-<smd name="22" x="-1.2" y="4.675" dx="0.54" dy="1.65" layer="1" rot="R180"/>
+<smd name="22" x="-1.2" y="4.55" dx="0.54" dy="1.4" layer="1" rot="R180"/>
 <rectangle x1="-1.385" y1="3.5" x2="-1.015" y2="4.5" layer="51" rot="R180"/>
-<smd name="23" x="-2" y="4.675" dx="0.54" dy="1.65" layer="1" rot="R180"/>
+<smd name="23" x="-2" y="4.55" dx="0.54" dy="1.4" layer="1" rot="R180"/>
 <rectangle x1="-2.185" y1="3.5" x2="-1.815" y2="4.5" layer="51" rot="R180"/>
-<smd name="24" x="-2.8" y="4.675" dx="0.54" dy="1.65" layer="1" rot="R180"/>
+<smd name="24" x="-2.8" y="4.55" dx="0.54" dy="1.4" layer="1" rot="R180"/>
 <rectangle x1="-2.985" y1="3.5" x2="-2.615" y2="4.5" layer="51" rot="R180"/>
-<smd name="25" x="-4.675" y="2.8" dx="0.54" dy="1.65" layer="1" rot="R270"/>
+<smd name="25" x="-4.55" y="2.8" dx="0.54" dy="1.4" layer="1" rot="R270"/>
 <rectangle x1="-4.185" y1="2.3" x2="-3.815" y2="3.3" layer="51" rot="R270"/>
-<smd name="26" x="-4.675" y="2" dx="0.54" dy="1.65" layer="1" rot="R270"/>
+<smd name="26" x="-4.55" y="2" dx="0.54" dy="1.4" layer="1" rot="R270"/>
 <rectangle x1="-4.185" y1="1.5" x2="-3.815" y2="2.5" layer="51" rot="R270"/>
-<smd name="27" x="-4.675" y="1.2" dx="0.54" dy="1.65" layer="1" rot="R270"/>
+<smd name="27" x="-4.55" y="1.2" dx="0.54" dy="1.4" layer="1" rot="R270"/>
 <rectangle x1="-4.185" y1="0.7" x2="-3.815" y2="1.7" layer="51" rot="R270"/>
-<smd name="28" x="-4.675" y="0.4" dx="0.54" dy="1.65" layer="1" rot="R270"/>
+<smd name="28" x="-4.55" y="0.4" dx="0.54" dy="1.4" layer="1" rot="R270"/>
 <rectangle x1="-4.185" y1="-0.1" x2="-3.815" y2="0.9" layer="51" rot="R270"/>
-<smd name="29" x="-4.675" y="-0.4" dx="0.54" dy="1.65" layer="1" rot="R270"/>
+<smd name="29" x="-4.55" y="-0.4" dx="0.54" dy="1.4" layer="1" rot="R270"/>
 <rectangle x1="-4.185" y1="-0.9" x2="-3.815" y2="0.1" layer="51" rot="R270"/>
-<smd name="30" x="-4.675" y="-1.2" dx="0.54" dy="1.65" layer="1" rot="R270"/>
+<smd name="30" x="-4.55" y="-1.2" dx="0.54" dy="1.4" layer="1" rot="R270"/>
 <rectangle x1="-4.185" y1="-1.7" x2="-3.815" y2="-0.7" layer="51" rot="R270"/>
-<smd name="31" x="-4.675" y="-2" dx="0.54" dy="1.65" layer="1" rot="R270"/>
+<smd name="31" x="-4.55" y="-2" dx="0.54" dy="1.4" layer="1" rot="R270"/>
 <rectangle x1="-4.185" y1="-2.5" x2="-3.815" y2="-1.5" layer="51" rot="R270"/>
-<smd name="32" x="-4.675" y="-2.8" dx="0.54" dy="1.65" layer="1" rot="R270"/>
+<smd name="32" x="-4.55" y="-2.8" dx="0.54" dy="1.4" layer="1" rot="R270"/>
 <rectangle x1="-4.185" y1="-3.3" x2="-3.815" y2="-2.3" layer="51" rot="R270"/>
 <circle x="-2.72" y="-2.76" radius="0.45" width="0.127" layer="21"/>
 <text x="-3.11" y="5.89" size="1.27" layer="25" font="vector">&gt;Name</text>
@@ -3299,14 +3310,14 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <wire x1="-2.395" y1="-2.11" x2="-2.395" y2="2.085" width="0.127" layer="21"/>
 <wire x1="-2.395" y1="2.085" x2="2.395" y2="2.085" width="0.127" layer="51"/>
 <wire x1="-2.34" y1="0.635" x2="-2.34" y2="-0.635" width="0.127" layer="21" curve="-180"/>
-<smd name="1" x="-1.905" y="-3" dx="0.6" dy="2.4" layer="1"/>
-<smd name="2" x="-0.635" y="-3" dx="0.6" dy="2.4" layer="1"/>
-<smd name="3" x="0.635" y="-3" dx="0.6" dy="2.4" layer="1"/>
-<smd name="4" x="1.905" y="-3" dx="0.6" dy="2.4" layer="1"/>
-<smd name="5" x="1.905" y="3" dx="0.6" dy="2.4" layer="1"/>
-<smd name="6" x="0.635" y="3" dx="0.6" dy="2.4" layer="1"/>
-<smd name="7" x="-0.635" y="3" dx="0.6" dy="2.4" layer="1"/>
-<smd name="8" x="-1.905" y="3" dx="0.6" dy="2.4" layer="1"/>
+<smd name="1" x="-1.905" y="-2.8" dx="0.6" dy="2" layer="1"/>
+<smd name="2" x="-0.635" y="-2.8" dx="0.6" dy="2" layer="1"/>
+<smd name="3" x="0.635" y="-2.8" dx="0.6" dy="2" layer="1"/>
+<smd name="4" x="1.905" y="-2.8" dx="0.6" dy="2" layer="1"/>
+<smd name="5" x="1.905" y="2.8" dx="0.6" dy="2" layer="1"/>
+<smd name="6" x="0.635" y="2.8" dx="0.6" dy="2" layer="1"/>
+<smd name="7" x="-0.635" y="2.8" dx="0.6" dy="2" layer="1"/>
+<smd name="8" x="-1.905" y="2.8" dx="0.6" dy="2" layer="1"/>
 <text x="-3.175" y="-2.54" size="1.016" layer="25" font="vector" rot="R90">&gt;NAME</text>
 <text x="4.445" y="-3.175" size="1.016" layer="27" font="vector" rot="R90">&gt;VALUE</text>
 <rectangle x1="-2.1549" y1="-3.1" x2="-1.6551" y2="-2.2" layer="51"/>
@@ -3432,7 +3443,7 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 </class>
 </classes>
 <parts>
-<part name="IC1" library="stm32" deviceset="STM32F042K*T" device="/M" value="STM32F042KT/M"/>
+<part name="IC1" library="stm32" deviceset="STM32F042K*T" device="/M" value="STM32F303K8T6"/>
 <part name="P1" library="raspi" deviceset="RASPI_BOARD_B+#" device="_HC"/>
 <part name="C1" library="gen-discrete" deviceset="CAPACITOR" device="2012" value="0.1μ"/>
 <part name="C2" library="gen-discrete" deviceset="CAPACITOR" device="2012" value="0.1μ"/>
@@ -3515,8 +3526,8 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <sheets>
 <sheet>
 <plain>
-<text x="302.26" y="91.44" size="1.524" layer="96" rot="R90">OSBL1608C1A</text>
-<text x="331.47" y="91.44" size="1.524" layer="96" rot="R90">OSHR1608C1A</text>
+<text x="320.04" y="91.44" size="1.524" layer="96" rot="R90">OSBL1608C1A</text>
+<text x="349.25" y="91.44" size="1.524" layer="96" rot="R90">OSHR1608C1A</text>
 <text x="396.24" y="173.99" size="1.524" layer="96">OSTG1608C1A</text>
 </plain>
 <instances>
@@ -3564,11 +3575,11 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <instance part="+5V-IN" gate="G$1" x="151.13" y="134.62"/>
 <instance part="P+5" gate="1" x="140.97" y="144.78"/>
 <instance part="GND13" gate="1" x="140.97" y="127"/>
-<instance part="LED1" gate="G$1" x="306.07" y="96.52"/>
-<instance part="LED2" gate="G$1" x="321.31" y="96.52"/>
-<instance part="R3" gate="G$1" x="306.07" y="109.22"/>
-<instance part="R4" gate="G$1" x="321.31" y="109.22"/>
-<instance part="GND14" gate="1" x="306.07" y="86.36"/>
+<instance part="LED1" gate="G$1" x="323.85" y="96.52"/>
+<instance part="LED2" gate="G$1" x="339.09" y="96.52"/>
+<instance part="R3" gate="G$1" x="323.85" y="109.22"/>
+<instance part="R4" gate="G$1" x="339.09" y="109.22"/>
+<instance part="GND14" gate="1" x="323.85" y="86.36"/>
 <instance part="GND" gate="G$1" x="116.84" y="181.61"/>
 <instance part="VDD" gate="G$1" x="130.81" y="181.61"/>
 <instance part="VDDA" gate="G$1" x="143.51" y="181.61"/>
@@ -3578,22 +3589,22 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <instance part="+3V5" gate="G$1" x="139.7" y="189.23"/>
 <instance part="POS1" gate="G$1" x="189.23" y="180.34" rot="R180"/>
 <instance part="POS2" gate="G$1" x="203.2" y="180.34" rot="R180"/>
-<instance part="1A" gate="G$1" x="388.62" y="104.14" rot="R270"/>
-<instance part="1B" gate="G$1" x="375.92" y="104.14" rot="R270"/>
-<instance part="2A" gate="G$1" x="363.22" y="104.14" rot="R270"/>
-<instance part="2B" gate="G$1" x="350.52" y="104.14" rot="R270"/>
+<instance part="1A" gate="G$1" x="401.32" y="104.14" rot="R270"/>
+<instance part="1B" gate="G$1" x="388.62" y="104.14" rot="R270"/>
+<instance part="2A" gate="G$1" x="375.92" y="104.14" rot="R270"/>
+<instance part="2B" gate="G$1" x="363.22" y="104.14" rot="R270"/>
 <instance part="R5" gate="G$1" x="391.16" y="165.1" rot="R90"/>
 <instance part="LED3" gate="G$1" x="403.86" y="165.1" rot="R90"/>
 <instance part="GND15" gate="1" x="406.4" y="160.02"/>
 <instance part="XMTR" gate="G$1" x="391.16" y="147.32"/>
-<instance part="R6" gate="G$1" x="382.27" y="110.49" rot="R180"/>
-<instance part="GND16" gate="1" x="382.27" y="119.38" rot="R180"/>
-<instance part="R7" gate="G$1" x="369.57" y="110.49" rot="R180"/>
-<instance part="GND17" gate="1" x="369.57" y="119.38" rot="R180"/>
-<instance part="R8" gate="G$1" x="356.87" y="110.49" rot="R180"/>
-<instance part="GND18" gate="1" x="356.87" y="119.38" rot="R180"/>
-<instance part="R9" gate="G$1" x="344.17" y="110.49" rot="R180"/>
-<instance part="GND19" gate="1" x="344.17" y="119.38" rot="R180"/>
+<instance part="R6" gate="G$1" x="394.97" y="110.49" rot="R180"/>
+<instance part="GND16" gate="1" x="394.97" y="119.38" rot="R180"/>
+<instance part="R7" gate="G$1" x="382.27" y="110.49" rot="R180"/>
+<instance part="GND17" gate="1" x="382.27" y="119.38" rot="R180"/>
+<instance part="R8" gate="G$1" x="369.57" y="110.49" rot="R180"/>
+<instance part="GND18" gate="1" x="369.57" y="119.38" rot="R180"/>
+<instance part="R9" gate="G$1" x="356.87" y="110.49" rot="R180"/>
+<instance part="GND19" gate="1" x="356.87" y="119.38" rot="R180"/>
 <instance part="R10" gate="G$1" x="367.03" y="140.97"/>
 <instance part="R11" gate="G$1" x="353.06" y="140.97"/>
 <instance part="GND20" gate="1" x="353.06" y="132.08"/>
@@ -3709,7 +3720,7 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <segment>
 <pinref part="XMTR" gate="G$1" pin="4"/>
 <wire x1="386.08" y1="144.78" x2="386.08" y2="124.46" width="0.1524" layer="91"/>
-<label x="386.08" y="125.73" size="1.778" layer="95" rot="R90"/>
+<label x="388.62" y="125.73" size="1.778" layer="95" rot="R90"/>
 <pinref part="R12" gate="G$1" pin="1"/>
 <wire x1="386.08" y1="144.78" x2="377.19" y2="144.78" width="0.1524" layer="91"/>
 <junction x="386.08" y="144.78"/>
@@ -3728,13 +3739,13 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <label x="217.17" y="125.73" size="1.778" layer="95" rot="R90"/>
 </segment>
 <segment>
+<label x="398.78" y="121.92" size="1.778" layer="95" rot="R270"/>
+<wire x1="398.78" y1="104.14" x2="398.78" y2="105.41" width="0.1524" layer="91"/>
 <pinref part="1A" gate="G$1" pin="TP"/>
-<label x="386.08" y="121.92" size="1.778" layer="95" rot="R270"/>
-<wire x1="386.08" y1="104.14" x2="386.08" y2="105.41" width="0.1524" layer="91"/>
 <pinref part="R6" gate="G$1" pin="1"/>
-<wire x1="386.08" y1="105.41" x2="386.08" y2="124.46" width="0.1524" layer="91"/>
-<wire x1="382.27" y1="105.41" x2="386.08" y2="105.41" width="0.1524" layer="91"/>
-<junction x="386.08" y="105.41"/>
+<wire x1="398.78" y1="105.41" x2="398.78" y2="124.46" width="0.1524" layer="91"/>
+<wire x1="394.97" y1="105.41" x2="398.78" y2="105.41" width="0.1524" layer="91"/>
+<junction x="398.78" y="105.41"/>
 </segment>
 </net>
 <net name="SWDIO" class="0">
@@ -3759,30 +3770,6 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <pinref part="P1" gate="G$1" pin="GPIO25"/>
 <wire x1="236.22" y1="76.2" x2="208.28" y2="76.2" width="0.1524" layer="91"/>
 <label x="209.55" y="76.2" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="SCL" class="0">
-<segment>
-<pinref part="IC1" gate="MCU" pin="PB6"/>
-<wire x1="149.86" y1="96.52" x2="208.28" y2="96.52" width="0.1524" layer="91"/>
-<label x="200.66" y="96.52" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="P1" gate="G$1" pin="SCL"/>
-<wire x1="236.22" y1="43.18" x2="208.28" y2="43.18" width="0.1524" layer="91"/>
-<label x="209.55" y="43.18" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="SDA" class="0">
-<segment>
-<pinref part="IC1" gate="MCU" pin="PB7"/>
-<wire x1="149.86" y1="99.06" x2="208.28" y2="99.06" width="0.1524" layer="91"/>
-<label x="200.66" y="99.06" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="P1" gate="G$1" pin="SDA"/>
-<wire x1="236.22" y1="40.64" x2="208.28" y2="40.64" width="0.1524" layer="91"/>
-<label x="209.55" y="40.64" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="MOTOR1_POS" class="0">
@@ -3910,39 +3897,39 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <net name="LED1" class="0">
 <segment>
 <pinref part="R3" gate="G$1" pin="1"/>
-<wire x1="306.07" y1="114.3" x2="306.07" y2="124.46" width="0.1524" layer="91"/>
-<label x="306.07" y="115.57" size="1.778" layer="95" rot="R90"/>
+<wire x1="323.85" y1="114.3" x2="323.85" y2="124.46" width="0.1524" layer="91"/>
+<label x="323.85" y="115.57" size="1.778" layer="95" rot="R90"/>
 </segment>
 <segment>
-<pinref part="IC1" gate="MCU" pin="PB3"/>
-<wire x1="149.86" y1="88.9" x2="208.28" y2="88.9" width="0.1524" layer="91"/>
-<label x="200.66" y="88.9" size="1.778" layer="95"/>
+<pinref part="IC1" gate="MCU" pin="PB0"/>
+<wire x1="149.86" y1="81.28" x2="208.28" y2="81.28" width="0.1524" layer="91"/>
+<label x="205.74" y="81.28" size="1.778" layer="95" rot="MR0"/>
 </segment>
 </net>
 <net name="LED2" class="0">
 <segment>
 <pinref part="R4" gate="G$1" pin="1"/>
-<wire x1="321.31" y1="114.3" x2="321.31" y2="124.46" width="0.1524" layer="91"/>
-<label x="321.31" y="115.57" size="1.778" layer="95" rot="R90"/>
+<wire x1="339.09" y1="114.3" x2="339.09" y2="124.46" width="0.1524" layer="91"/>
+<label x="339.09" y="115.57" size="1.778" layer="95" rot="R90"/>
 </segment>
 <segment>
-<pinref part="IC1" gate="MCU" pin="PB4"/>
-<wire x1="149.86" y1="91.44" x2="208.28" y2="91.44" width="0.1524" layer="91"/>
-<label x="200.66" y="91.44" size="1.778" layer="95"/>
+<pinref part="IC1" gate="MCU" pin="PB1"/>
+<wire x1="149.86" y1="83.82" x2="208.28" y2="83.82" width="0.1524" layer="91"/>
+<label x="205.74" y="83.82" size="1.778" layer="95" rot="MR0"/>
 </segment>
 </net>
 <net name="N$8" class="0">
 <segment>
 <pinref part="R3" gate="G$1" pin="2"/>
 <pinref part="LED1" gate="G$1" pin="A"/>
-<wire x1="306.07" y1="104.14" x2="306.07" y2="101.6" width="0.1524" layer="91"/>
+<wire x1="323.85" y1="104.14" x2="323.85" y2="101.6" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$9" class="0">
 <segment>
 <pinref part="R4" gate="G$1" pin="2"/>
 <pinref part="LED2" gate="G$1" pin="A"/>
-<wire x1="321.31" y1="104.14" x2="321.31" y2="101.6" width="0.1524" layer="91"/>
+<wire x1="339.09" y1="104.14" x2="339.09" y2="101.6" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="GND" class="1">
@@ -3961,14 +3948,14 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <junction x="278.13" y="50.8"/>
 </segment>
 <segment>
-<wire x1="321.31" y1="92.71" x2="306.07" y2="92.71" width="0.1524" layer="91"/>
+<wire x1="339.09" y1="92.71" x2="323.85" y2="92.71" width="0.1524" layer="91"/>
 <pinref part="LED1" gate="G$1" pin="K"/>
-<wire x1="306.07" y1="93.98" x2="306.07" y2="92.71" width="0.1524" layer="91"/>
+<wire x1="323.85" y1="93.98" x2="323.85" y2="92.71" width="0.1524" layer="91"/>
 <pinref part="LED2" gate="G$1" pin="K"/>
-<wire x1="321.31" y1="93.98" x2="321.31" y2="92.71" width="0.1524" layer="91"/>
+<wire x1="339.09" y1="93.98" x2="339.09" y2="92.71" width="0.1524" layer="91"/>
 <pinref part="GND14" gate="1" pin="GND"/>
-<wire x1="306.07" y1="88.9" x2="306.07" y2="92.71" width="0.1524" layer="91"/>
-<junction x="306.07" y="92.71"/>
+<wire x1="323.85" y1="88.9" x2="323.85" y2="92.71" width="0.1524" layer="91"/>
+<junction x="323.85" y="92.71"/>
 </segment>
 <segment>
 <pinref part="IC3" gate="P" pin="GND"/>
@@ -4063,22 +4050,22 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <segment>
 <pinref part="R6" gate="G$1" pin="2"/>
 <pinref part="GND16" gate="1" pin="GND"/>
-<wire x1="382.27" y1="116.84" x2="382.27" y2="115.57" width="0.1524" layer="91"/>
+<wire x1="394.97" y1="116.84" x2="394.97" y2="115.57" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="R7" gate="G$1" pin="2"/>
 <pinref part="GND17" gate="1" pin="GND"/>
-<wire x1="369.57" y1="116.84" x2="369.57" y2="115.57" width="0.1524" layer="91"/>
+<wire x1="382.27" y1="116.84" x2="382.27" y2="115.57" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="R8" gate="G$1" pin="2"/>
 <pinref part="GND18" gate="1" pin="GND"/>
-<wire x1="356.87" y1="116.84" x2="356.87" y2="115.57" width="0.1524" layer="91"/>
+<wire x1="369.57" y1="116.84" x2="369.57" y2="115.57" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="R9" gate="G$1" pin="2"/>
 <pinref part="GND19" gate="1" pin="GND"/>
-<wire x1="344.17" y1="116.84" x2="344.17" y2="115.57" width="0.1524" layer="91"/>
+<wire x1="356.87" y1="116.84" x2="356.87" y2="115.57" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="XMTR" gate="G$1" pin="2"/>
@@ -4129,13 +4116,13 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <label x="219.71" y="125.73" size="1.778" layer="95" rot="R90"/>
 </segment>
 <segment>
+<label x="386.08" y="121.92" size="1.778" layer="95" rot="R270"/>
+<wire x1="386.08" y1="104.14" x2="386.08" y2="105.41" width="0.1524" layer="91"/>
 <pinref part="1B" gate="G$1" pin="TP"/>
-<label x="373.38" y="121.92" size="1.778" layer="95" rot="R270"/>
-<wire x1="373.38" y1="104.14" x2="373.38" y2="105.41" width="0.1524" layer="91"/>
 <pinref part="R7" gate="G$1" pin="1"/>
-<wire x1="373.38" y1="105.41" x2="373.38" y2="124.46" width="0.1524" layer="91"/>
-<wire x1="369.57" y1="105.41" x2="373.38" y2="105.41" width="0.1524" layer="91"/>
-<junction x="373.38" y="105.41"/>
+<wire x1="386.08" y1="105.41" x2="386.08" y2="124.46" width="0.1524" layer="91"/>
+<wire x1="382.27" y1="105.41" x2="386.08" y2="105.41" width="0.1524" layer="91"/>
+<junction x="386.08" y="105.41"/>
 </segment>
 </net>
 <net name="MOTOR2_F" class="0">
@@ -4151,13 +4138,13 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <label x="281.94" y="125.73" size="1.778" layer="95" rot="R90"/>
 </segment>
 <segment>
+<label x="373.38" y="121.92" size="1.778" layer="95" rot="R270"/>
+<wire x1="373.38" y1="104.14" x2="373.38" y2="105.41" width="0.1524" layer="91"/>
 <pinref part="2A" gate="G$1" pin="TP"/>
-<label x="360.68" y="121.92" size="1.778" layer="95" rot="R270"/>
-<wire x1="360.68" y1="104.14" x2="360.68" y2="105.41" width="0.1524" layer="91"/>
 <pinref part="R8" gate="G$1" pin="1"/>
-<wire x1="360.68" y1="105.41" x2="360.68" y2="124.46" width="0.1524" layer="91"/>
-<wire x1="356.87" y1="105.41" x2="360.68" y2="105.41" width="0.1524" layer="91"/>
-<junction x="360.68" y="105.41"/>
+<wire x1="373.38" y1="105.41" x2="373.38" y2="124.46" width="0.1524" layer="91"/>
+<wire x1="369.57" y1="105.41" x2="373.38" y2="105.41" width="0.1524" layer="91"/>
+<junction x="373.38" y="105.41"/>
 </segment>
 </net>
 <net name="MOTOR2_R" class="0">
@@ -4172,13 +4159,13 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <label x="284.48" y="125.73" size="1.778" layer="95" rot="R90"/>
 </segment>
 <segment>
+<label x="360.68" y="121.92" size="1.778" layer="95" rot="R270"/>
+<wire x1="360.68" y1="104.14" x2="360.68" y2="105.41" width="0.1524" layer="91"/>
 <pinref part="2B" gate="G$1" pin="TP"/>
-<label x="347.98" y="121.92" size="1.778" layer="95" rot="R270"/>
-<wire x1="347.98" y1="104.14" x2="347.98" y2="105.41" width="0.1524" layer="91"/>
 <pinref part="R9" gate="G$1" pin="1"/>
-<wire x1="347.98" y1="105.41" x2="347.98" y2="124.46" width="0.1524" layer="91"/>
-<wire x1="344.17" y1="105.41" x2="347.98" y2="105.41" width="0.1524" layer="91"/>
-<junction x="347.98" y="105.41"/>
+<wire x1="360.68" y1="105.41" x2="360.68" y2="124.46" width="0.1524" layer="91"/>
+<wire x1="356.87" y1="105.41" x2="360.68" y2="105.41" width="0.1524" layer="91"/>
+<junction x="360.68" y="105.41"/>
 </segment>
 </net>
 <net name="N$11" class="0">
@@ -4215,7 +4202,7 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <segment>
 <pinref part="R10" gate="G$1" pin="2"/>
 <wire x1="367.03" y1="135.89" x2="367.03" y2="134.62" width="0.1524" layer="91"/>
-<label x="367.03" y="125.73" size="1.778" layer="95" rot="R90"/>
+<label x="369.57" y="125.73" size="1.778" layer="95" rot="R90"/>
 <wire x1="367.03" y1="134.62" x2="367.03" y2="124.46" width="0.1524" layer="91"/>
 <wire x1="367.03" y1="134.62" x2="360.68" y2="134.62" width="0.1524" layer="91"/>
 <wire x1="360.68" y1="134.62" x2="360.68" y2="147.32" width="0.1524" layer="91"/>
@@ -4231,6 +4218,58 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <pinref part="XMTR" gate="G$1" pin="3"/>
 <wire x1="367.03" y1="146.05" x2="367.03" y2="147.32" width="0.1524" layer="91"/>
 <wire x1="367.03" y1="147.32" x2="386.08" y2="147.32" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="SPI_MOSI" class="0">
+<segment>
+<pinref part="P1" gate="G$1" pin="SPI_MOSI"/>
+<wire x1="266.7" y1="91.44" x2="284.48" y2="91.44" width="0.1524" layer="91"/>
+<wire x1="284.48" y1="91.44" x2="284.48" y2="124.46" width="0.1524" layer="91"/>
+<label x="284.48" y="121.92" size="1.778" layer="95" rot="MR270"/>
+</segment>
+<segment>
+<pinref part="IC1" gate="MCU" pin="PB5"/>
+<wire x1="149.86" y1="93.98" x2="208.28" y2="93.98" width="0.1524" layer="91"/>
+<label x="205.74" y="93.98" size="1.778" layer="95" rot="MR0"/>
+</segment>
+</net>
+<net name="SPI_MISO" class="0">
+<segment>
+<pinref part="P1" gate="G$1" pin="SPI_MISO"/>
+<wire x1="266.7" y1="88.9" x2="287.02" y2="88.9" width="0.1524" layer="91"/>
+<wire x1="287.02" y1="88.9" x2="287.02" y2="124.46" width="0.1524" layer="91"/>
+<label x="287.02" y="121.92" size="1.778" layer="95" rot="MR270"/>
+</segment>
+<segment>
+<pinref part="IC1" gate="MCU" pin="PB4"/>
+<wire x1="149.86" y1="91.44" x2="208.28" y2="91.44" width="0.1524" layer="91"/>
+<label x="205.74" y="91.44" size="1.778" layer="95" rot="MR0"/>
+</segment>
+</net>
+<net name="SPI_SCLK" class="0">
+<segment>
+<pinref part="P1" gate="G$1" pin="SPI_SCLK"/>
+<wire x1="266.7" y1="86.36" x2="289.56" y2="86.36" width="0.1524" layer="91"/>
+<wire x1="289.56" y1="86.36" x2="289.56" y2="124.46" width="0.1524" layer="91"/>
+<label x="289.56" y="121.92" size="1.778" layer="95" rot="MR270"/>
+</segment>
+<segment>
+<pinref part="IC1" gate="MCU" pin="PB3"/>
+<wire x1="149.86" y1="88.9" x2="208.28" y2="88.9" width="0.1524" layer="91"/>
+<label x="205.74" y="88.9" size="1.778" layer="95" rot="MR0"/>
+</segment>
+</net>
+<net name="SPI_SS" class="0">
+<segment>
+<pinref part="P1" gate="G$1" pin="SPI_CE0"/>
+<wire x1="266.7" y1="83.82" x2="292.1" y2="83.82" width="0.1524" layer="91"/>
+<wire x1="292.1" y1="83.82" x2="292.1" y2="124.46" width="0.1524" layer="91"/>
+<label x="292.1" y="121.92" size="1.778" layer="95" rot="MR270"/>
+</segment>
+<segment>
+<pinref part="IC1" gate="MCU" pin="PA15"/>
+<wire x1="149.86" y1="76.2" x2="208.28" y2="76.2" width="0.1524" layer="91"/>
+<label x="205.74" y="76.2" size="1.778" layer="95" rot="MR0"/>
 </segment>
 </net>
 </nets>
@@ -4257,38 +4296,43 @@ Source: http://www.rohm.com/products/databook/motor/pdf/bd623x_series-e.pdf</des
 <approved hash="211,1,95.25,16.51,NRST,DIG[0..12],,,,"/>
 <approved hash="211,1,208.28,88.9,NRST,DIG[0..12],,,,"/>
 <approved hash="211,1,208.28,53.34,TX_OUT,DIG[0..12],,,,"/>
+<approved hash="211,1,386.08,124.46,TX_OUT,DIG[0..12],,,,"/>
 <approved hash="211,1,208.28,58.42,MOTOR1_F,DIG[0..12],,,,"/>
 <approved hash="211,1,217.17,124.46,MOTOR1_F,DIG[0..12],,,,"/>
-<approved hash="211,1,386.08,124.46,MOTOR1_F,DIG[0..12],,,,"/>
+<approved hash="211,1,398.78,124.46,MOTOR1_F,DIG[0..12],,,,"/>
 <approved hash="211,1,208.28,71.12,SWDIO,DIG[0..12],,,,"/>
 <approved hash="211,1,208.28,78.74,SWDIO,DIG[0..12],,,,"/>
 <approved hash="211,1,208.28,73.66,SWCLK,DIG[0..12],,,,"/>
 <approved hash="211,1,208.28,76.2,SWCLK,DIG[0..12],,,,"/>
-<approved hash="211,1,208.28,96.52,SCL,DIG[0..12],,,,"/>
-<approved hash="211,1,208.28,43.18,SCL,DIG[0..12],,,,"/>
-<approved hash="211,1,208.28,99.06,SDA,DIG[0..12],,,,"/>
-<approved hash="211,1,208.28,40.64,SDA,DIG[0..12],,,,"/>
 <approved hash="211,1,173.99,38.1,MOTOR1_POS,ANA[0..1],,,,"/>
 <approved hash="211,1,246.38,203.2,MOTOR1_POS,ANA[0..1],,,,"/>
 <approved hash="211,1,189.23,203.2,MOTOR1_POS,ANA[0..1],,,,"/>
-<approved hash="211,1,306.07,124.46,LED1,DIG[0..12],,,,"/>
-<approved hash="211,1,208.28,88.9,LED1,DIG[0..12],,,,"/>
-<approved hash="211,1,321.31,124.46,LED2,DIG[0..12],,,,"/>
-<approved hash="211,1,208.28,91.44,LED2,DIG[0..12],,,,"/>
+<approved hash="211,1,323.85,124.46,LED1,DIG[0..12],,,,"/>
+<approved hash="211,1,208.28,81.28,LED1,DIG[0..12],,,,"/>
+<approved hash="211,1,339.09,124.46,LED2,DIG[0..12],,,,"/>
+<approved hash="211,1,208.28,83.82,LED2,DIG[0..12],,,,"/>
 <approved hash="211,1,173.99,40.64,MOTOR2_POS,ANA[0..1],,,,"/>
 <approved hash="211,1,298.45,203.2,MOTOR2_POS,ANA[0..1],,,,"/>
 <approved hash="211,1,203.2,203.2,MOTOR2_POS,ANA[0..1],,,,"/>
 <approved hash="211,1,208.28,60.96,MOTOR1_R,DIG[0..12],,,,"/>
 <approved hash="211,1,219.71,124.46,MOTOR1_R,DIG[0..12],,,,"/>
-<approved hash="211,1,373.38,124.46,MOTOR1_R,DIG[0..12],,,,"/>
+<approved hash="211,1,386.08,124.46,MOTOR1_R,DIG[0..12],,,,"/>
 <approved hash="211,1,208.28,63.5,MOTOR2_F,DIG[0..12],,,,"/>
 <approved hash="211,1,281.94,124.46,MOTOR2_F,DIG[0..12],,,,"/>
-<approved hash="211,1,360.68,124.46,MOTOR2_F,DIG[0..12],,,,"/>
+<approved hash="211,1,373.38,124.46,MOTOR2_F,DIG[0..12],,,,"/>
 <approved hash="211,1,208.28,66.04,MOTOR2_R,DIG[0..12],,,,"/>
 <approved hash="211,1,284.48,124.46,MOTOR2_R,DIG[0..12],,,,"/>
-<approved hash="211,1,347.98,124.46,MOTOR2_R,DIG[0..12],,,,"/>
+<approved hash="211,1,360.68,124.46,MOTOR2_R,DIG[0..12],,,,"/>
 <approved hash="211,1,208.28,50.8,TX_IN,DIG[0..12],,,,"/>
 <approved hash="211,1,367.03,124.46,TX_IN,DIG[0..12],,,,"/>
+<approved hash="211,1,284.48,124.46,SPI_MOSI,DIG[0..12],,,,"/>
+<approved hash="211,1,208.28,93.98,SPI_MOSI,DIG[0..12],,,,"/>
+<approved hash="211,1,287.02,124.46,SPI_MISO,DIG[0..12],,,,"/>
+<approved hash="211,1,208.28,91.44,SPI_MISO,DIG[0..12],,,,"/>
+<approved hash="211,1,289.56,124.46,SPI_SCLK,DIG[0..12],,,,"/>
+<approved hash="211,1,208.28,88.9,SPI_SCLK,DIG[0..12],,,,"/>
+<approved hash="211,1,292.1,124.46,SPI_SS,DIG[0..12],,,,"/>
+<approved hash="211,1,208.28,76.2,SPI_SS,DIG[0..12],,,,"/>
 </errors>
 </schematic>
 </drawing>

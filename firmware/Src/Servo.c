@@ -28,7 +28,7 @@
 
 #define MUL_RATIONAL(a, b) (((int)(b) * a##_NUMER) / a##_DENOM)
 
-#define POS_DMA_CH_BUFFER_SIZE 16
+#define POS_DMA_CH_BUFFER_SIZE 8
 #define POS_DMA_BUFFER_SIZE (POS_DMA_CH_BUFFER_SIZE * 2)
 
 static int startMotor(ServoHandle* Handle);
@@ -141,8 +141,8 @@ static int16_t adjustPos(volatile ServoContext* context, int ch, int16_t raw)
  * calculating duty rate of PWM
  *-------------------------------------------------------------*/
 static int16_t calculateDuty(volatile ServoContext* context, int ch){
-	volatile ServoConfig* config = &context->configSet.config[ch];
-	volatile ServoPosition* pos = &context->position[ch];
+	ServoConfig* config =(ServoConfig*) &context->configSet.config[ch];
+	ServoPosition* pos = (ServoPosition*)&context->position[ch];
 
 	int rtarget = config->target * TARGET_BIAS;
 	int itarget = pos->target;
@@ -211,7 +211,7 @@ void scheduleServo(ServoHandle* handle)
 {
 	adc_count++;
 
-	volatile ServoContext* context = handle->context;
+	ServoContext* context = (ServoContext*)handle->context;
 
 	// reflect configuration change
 	if (context->needToUpdate){
@@ -228,7 +228,7 @@ void scheduleServo(ServoHandle* handle)
 
 	// negative feedback control
 	for (ch = 0; ch < SERVO_NUM; ch++){
-		volatile ServoConfig* config = &context->configSet.config[ch];
+		ServoConfig* config = (ServoConfig*)&context->configSet.config[ch];
 		int16_t current = context->pwmDuty[ch];
 		if (config->mode != SERVO_IDLE){
 			int16_t duty = calculateDuty(context, ch);

@@ -44,7 +44,7 @@
 ADC_HandleTypeDef hadc;
 DMA_HandleTypeDef hdma_adc;
 
-I2C_HandleTypeDef hi2c1;
+SPI_HandleTypeDef hspi1;
 
 TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim2;
@@ -55,8 +55,6 @@ static ServoHandle hservo;
 static LEDHandle hled;
 static HostCommHandle hcomm;
 
-static uint8_t rxbuff[64];
-static uint8_t txbuff[64];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -65,9 +63,9 @@ void Error_Handler(void);
 static void MX_GPIO_Init(void);
 static void MX_DMA_Init(void);
 static void MX_ADC_Init(void);
-static void MX_I2C1_Init(void);
 static void MX_TIM1_Init(void);
 static void MX_TIM2_Init(void);
+static void MX_SPI1_Init(void);
 
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
                                 
@@ -100,12 +98,12 @@ int main(void)
   MX_GPIO_Init();
   MX_DMA_Init();
   MX_ADC_Init();
-  MX_I2C1_Init();
   MX_TIM1_Init();
   MX_TIM2_Init();
+  MX_SPI1_Init();
 
   /* USER CODE BEGIN 2 */
-  if (initLED(&hled, &htim2, GPIOB, GPIO_PIN_3, GPIOB, GPIO_PIN_4) != HAL_OK){
+  if (initLED(&hled, &htim2, GPIOB, GPIO_PIN_0, GPIOB, GPIO_PIN_1) != HAL_OK){
 	  Error_Handler();
   }
   if (initServo(&hservo, &htim1, &hadc) != HAL_OK){
@@ -137,16 +135,36 @@ int main(void)
   commitLEDConfig(&hled, LED_SEQ_LEVEL_MASTER);
 
   while (1) {
-      HAL_I2C_Slave_Receive(&hi2c1, rxbuff, sizeof(rxbuff), HAL_MAX_DELAY);
-      int rxsize = sizeof(rxbuff) - hi2c1.XferCount;
-      if (rxsize > 0){
-    	  int txsize = processHostCommand(&hcomm, rxbuff, rxsize, txbuff, sizeof(txbuff));
-    	  if (txsize > 0){
-    		  if (HAL_I2C_Slave_Transmit(&hi2c1, txbuff, txsize, 500) != HAL_OK){
-    			  //__HAL_I2C_GENERATE_NACK(&hi2c1);
-    		  }
-    	  }
-      }
+	  uint8_t magic = TRACKCAM_MAGIC;
+	  uint8_t cmd;
+	  static uint8_t rxbuff[64];
+	  static uint8_t txbuff[64];
+
+	  int rc = HAL_SPI_TransmitReceive(&hspi1, &magic, &cmd, 1, HAL_MAX_DELAY);
+	  if (rc != HAL_OK){
+		  Error_Handler();
+	  }
+
+	  int argsize = validateHostCommand(cmd);
+	  if (argsize < 0){
+		  continue;
+	  }else if (argsize > 0){
+		  rc = HAL_SPI_Receive(&hspi1, rxbuff, argsize, 100);
+		  if (rc == HAL_TIMEOUT){
+			  continue;
+		  }else if (rc != HAL_OK){
+			  Error_Handler();
+		  }
+	  }
+	  int respsize = processHostCommand(&hcomm, cmd, rxbuff, argsize, txbuff, sizeof(txbuff));
+	  if (respsize > 0){
+		  int rc = HAL_SPI_TransmitReceive(&hspi1, rxbuff, txbuff, respsize, 100);
+		  if (rc == HAL_TIMEOUT){
+			  continue;
+		  }else if (rc != HAL_OK){
+			  Error_Handler();
+		  }
+	  }
 
   /* USER CODE END WHILE */
 
@@ -164,7 +182,6 @@ void SystemClock_Config(void)
 
   RCC_OscInitTypeDef RCC_OscInitStruct;
   RCC_ClkInitTypeDef RCC_ClkInitStruct;
-  RCC_PeriphCLKInitTypeDef PeriphClkInit;
 
     /**Initializes the CPU, AHB and APB busses clocks 
     */
@@ -189,13 +206,6 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
 
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-
-  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_I2C1;
-  PeriphClkInit.I2c1ClockSelection = RCC_I2C1CLKSOURCE_SYSCLK;
-  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
     Error_Handler();
   }
@@ -259,27 +269,24 @@ static void MX_ADC_Init(void)
 
 }
 
-/* I2C1 init function */
-static void MX_I2C1_Init(void)
+/* SPI1 init function */
+static void MX_SPI1_Init(void)
 {
 
-  hi2c1.Instance = I2C1;
-  hi2c1.Init.Timing = 0x20303E5D;
-  hi2c1.Init.OwnAddress1 = 66;
-  hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
-  hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
-  hi2c1.Init.OwnAddress2 = 0;
-  hi2c1.Init.OwnAddress2Masks = I2C_OA2_NOMASK;
-  hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
-  hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
-  if (HAL_I2C_Init(&hi2c1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-
-    /**Configure Analogue filter 
-    */
-  if (HAL_I2CEx_ConfigAnalogFilter(&hi2c1, I2C_ANALOGFILTER_ENABLE) != HAL_OK)
+  hspi1.Instance = SPI1;
+  hspi1.Init.Mode = SPI_MODE_SLAVE;
+  hspi1.Init.Direction = SPI_DIRECTION_2LINES;
+  hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
+  hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
+  hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
+  hspi1.Init.NSS = SPI_NSS_SOFT;
+  hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
+  hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
+  hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+  hspi1.Init.CRCPolynomial = 7;
+  hspi1.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
+  hspi1.Init.NSSPMode = SPI_NSS_PULSE_DISABLE;
+  if (HAL_SPI_Init(&hspi1) != HAL_OK)
   {
     Error_Handler();
   }
@@ -425,7 +432,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3|GPIO_PIN_4, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0|GPIO_PIN_1, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : PA5 */
   GPIO_InitStruct.Pin = GPIO_PIN_5;
@@ -440,8 +447,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PB3 PB4 */
-  GPIO_InitStruct.Pin = GPIO_PIN_3|GPIO_PIN_4;
+  /*Configure GPIO pins : PB0 PB1 */
+  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;

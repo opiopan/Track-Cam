@@ -303,28 +303,29 @@ static int registerLEDSequence(HostCommHandle* handle, uint8_t cmd,
  *-------------------------------------------------------------*/
 static struct {
 	int command;
+	int argsize;
 	int (*func)(HostCommHandle* handle, uint8_t cmd,
 			uint8_t* arg, int alen, uint8_t* respBuf, int rblen);
 } dispatch[] = {
-	{CMD_GET_SERVO_MODE, getServoMode},
-	{CMD_SET_SERVO_MODE_IDLE, setServoMode},
-	{CMD_SET_SERVO_MODE_THETA, setServoMode},
-	{CMD_SET_SERVO_MODE_DUTY, setServoMode},
-	{CMD_SET_SERVO_MODE_THETA_DUTY, setServoMode},
+	{CMD_GET_SERVO_MODE, 0, getServoMode},
+	{CMD_SET_SERVO_MODE_IDLE, 0, setServoMode},
+	{CMD_SET_SERVO_MODE_THETA, 0, setServoMode},
+	{CMD_SET_SERVO_MODE_DUTY, 0, setServoMode},
+	{CMD_SET_SERVO_MODE_THETA_DUTY, 0, setServoMode},
 
-	{CMD_GET_SERVO_POS, getServoPos},
-	{CMD_GET_SERVO_POS_RAW, getServoPosRaw},
-	{CMD_SET_SERVO_THETA, setServoTheta},
-	{CMD_SET_SERVO_DELTA_THETA, setServoDeltaTheta},
-	{CMD_SET_SERVO_DUTY, setServoDuty},
-	{CMD_SET_SERVO_THETA_DUTY, setServoThetaDuty},
-	{CMD_SET_SERVO_DELTA_THETA_DUTY, setServoDeltaThetaDuty},
-	{CMD_SET_SERVO_THETA_VELOCITY, setServoThetaVelocity},
-	{CMD_SET_SERVO_DELTA_THETA_VELOCITY, setServoDeltaThetaVelocity},
+	{CMD_GET_SERVO_POS, 0, getServoPos},
+	{CMD_GET_SERVO_POS_RAW, 0, getServoPosRaw},
+	{CMD_SET_SERVO_THETA, sizeof(ArgSetServoTheta), setServoTheta},
+	{CMD_SET_SERVO_DELTA_THETA, sizeof(ArgSetServoDeltaTheta), setServoDeltaTheta},
+	{CMD_SET_SERVO_DUTY, sizeof(ArgSetServoDuty), setServoDuty},
+	{CMD_SET_SERVO_THETA_DUTY, sizeof(ArgSetServoThetaDuty), setServoThetaDuty},
+	{CMD_SET_SERVO_DELTA_THETA_DUTY, sizeof(ArgSetServoDeltaThetaDuty), setServoDeltaThetaDuty},
+	{CMD_SET_SERVO_THETA_VELOCITY, sizeof(ArgSetServoThetaVelocity), setServoThetaVelocity},
+	{CMD_SET_SERVO_DELTA_THETA_VELOCITY, sizeof(ArgSetServoDeltaThetaVelocity), setServoDeltaThetaVelocity},
 
-	{CMD_SET_LED_MODE, setLEDMode},
-	{CMD_REGISTER_LED_SEQUENCE, registerLEDSequence},
-	{CMD_INVALID, NULL}
+	{CMD_SET_LED_MODE, sizeof(ArgSetLEDMode), setLEDMode},
+	{CMD_REGISTER_LED_SEQUENCE, sizeof(ArgRegisterLEDSequence), registerLEDSequence},
+	{CMD_INVALID, 0, NULL}
 };
 
 static uint8_t dispatchIdx[256];
@@ -351,16 +352,24 @@ int deinitHostComm(HostCommHandle* handle)
 	return 0;
 }
 
-int processHostCommand(HostCommHandle* handle, uint8_t* in, int inLength,
+int validateHostCommand(uint8_t cmd)
+{
+	uint8_t idx = dispatchIdx[cmd];
+	if (idx == CMD_INVALID){
+		return -1;
+	}else{
+		return dispatch[idx].argsize;
+	}
+}
+
+int processHostCommand(
+		HostCommHandle* handle, uint8_t cmd,
+		uint8_t* arg, int argLength,
 		uint8_t* outBuf, int outBufLength)
 {
-	if (inLength < 1){
-		return 0;
-	}
-
-	uint8_t idx = dispatchIdx[in[0]];
+	uint8_t idx = dispatchIdx[cmd];
 	if (idx != CMD_INVALID){
-		return dispatch[idx].func(handle, in[0], in + 1, inLength - 1, outBuf, outBufLength);
+		return dispatch[idx].func(handle, cmd, arg, argLength - 1, outBuf, outBufLength);
 	}
 	return 0;
 }

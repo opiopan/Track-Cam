@@ -26,8 +26,11 @@ typedef struct {
  *-------------------------------------------------------------*/
 int initHostComm(HostCommHandle* handle, LEDHandle* led, ServoHandle* servo);
 int deinitHostComm(HostCommHandle* handle);
+int validateHostCommand(uint8_t cmd);
 int processHostCommand(
-		HostCommHandle* handle, uint8_t* in, int inLength,
+		HostCommHandle* handle,
+		uint8_t cmd,
+		uint8_t* arg, int argLength,
 		uint8_t* outBuf, int outBufLength);
 
 #endif /* HOSTCOMM_H_ */

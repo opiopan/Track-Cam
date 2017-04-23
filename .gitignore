@@ -16,6 +16,6 @@ Track-Cam.pdf
 Track-Cam.pro
 eagle.epf
 .metadata
-/firmware/Debug
-/firmware/.gitignore
+/firmware/projects/*/Debug
+/firmware/projects/*/.gitignore
 .settings

@@ -7,6 +7,7 @@
 
 #include "Servo.h"
 #include <string.h>
+#include "project.h"
 
 #define SERVO_DUTY_ERROR 50
 

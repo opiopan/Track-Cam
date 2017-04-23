@@ -60,10 +60,10 @@ void trackCamMain(TrackCamContext* c)
 	commitLEDConfig(&hled, LED_SEQ_LEVEL_MASTER);
 
 	while (1) {
-		uint8_t magic = TRACKCAM_MAGIC;
+		uint8_t magic = TRACKCAM_MAGIC_CMD;
 		uint8_t cmd;
 		static uint8_t rxbuff[64];
-		static uint8_t txbuff[64];
+		static uint8_t txbuff[64 + 4];
 
 		int rc = HAL_SPI_TransmitReceive(context.hspi, &magic, &cmd, 1, HAL_MAX_DELAY);
 		if (rc != HAL_OK){
@@ -81,9 +81,11 @@ void trackCamMain(TrackCamContext* c)
 				Error_Handler();
 			}
 		}
-		int respsize = processHostCommand(&hcomm, cmd, rxbuff, argsize, txbuff, sizeof(txbuff));
+		int respsize = processHostCommand(
+				&hcomm, cmd, rxbuff, argsize, txbuff + 4, sizeof(txbuff) - 4);
 		if (respsize > 0){
-			int rc = HAL_SPI_TransmitReceive(context.hspi, rxbuff, txbuff, respsize, 100);
+			txbuff[2] = TRACKCAM_MAGIC_RESP;
+			int rc = HAL_SPI_TransmitReceive(context.hspi, txbuff + 3, rxbuff, respsize + 1, 100);
 			if (rc == HAL_TIMEOUT){
 				continue;
 			}else if (rc != HAL_OK){

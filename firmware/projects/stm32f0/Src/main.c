@@ -102,7 +102,12 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  trackCamMain();
+  TrackCamContext c;
+  c.hadc = &hadc;
+  c.hspi = &hspi1;
+  c.htimLed = &htim2;
+  c.htimMotor = &htim1;
+  trackCamMain(&c);
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */

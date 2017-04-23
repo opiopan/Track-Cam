@@ -34,13 +34,16 @@ typedef enum {
 	CMD_SET_LED_MODE = 0x60,
 	CMD_REGISTER_LED_SEQUENCE,
 
+	CMD_NOP = 0xfe,
+
 	CMD_INVALID = 0xff
 }trackCamCommand;
 
 /*---------------------------------------------------------------
  * magic number
  *-------------------------------------------------------------*/
-#define TRACKCAM_MAGIC 0x33
+#define TRACKCAM_MAGIC_CMD 0x33
+#define TRACKCAM_MAGIC_RESP 0x7a
 
 /*---------------------------------------------------------------
  * Command arguments and response definitions

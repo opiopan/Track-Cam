@@ -85,7 +85,8 @@ void trackCamMain(TrackCamContext* c)
 				&hcomm, cmd, rxbuff, argsize, txbuff + 4, sizeof(txbuff) - 4);
 		if (respsize > 0){
 			txbuff[2] = TRACKCAM_MAGIC_RESP;
-			int rc = HAL_SPI_TransmitReceive(context.hspi, txbuff + 3, rxbuff, respsize + 1, 100);
+			txbuff[3] = cmd;
+			int rc = HAL_SPI_TransmitReceive(context.hspi, txbuff + 2, rxbuff, respsize + 2, 100);
 			if (rc == HAL_TIMEOUT){
 				continue;
 			}else if (rc != HAL_OK){

@@ -11,6 +11,8 @@
 #include "LED.h"
 #include "HostComm.h"
 
+#include <string.h>
+
 /*
 extern ADC_HandleTypeDef hadc;
 extern SPI_HandleTypeDef hspi1;
@@ -25,6 +27,9 @@ static TrackCamContext context;
 static ServoHandle hservo;
 static LEDHandle hled;
 static HostCommHandle hcomm;
+
+volatile uint8_t lastcmd = 0xff;
+volatile int cmdcount = 0;
 
 void trackCamMain(TrackCamContext* c)
 {
@@ -59,6 +64,7 @@ void trackCamMain(TrackCamContext* c)
 	LED_CONFIG(&hled, LED_SEQ_LEVEL_MASTER).type[LED_RED] = LED_SEQ_TYPE_SERVO_IDLE;
 	commitLEDConfig(&hled, LED_SEQ_LEVEL_MASTER);
 
+
 	while (1) {
 		uint8_t magic = TRACKCAM_MAGIC_CMD;
 		uint8_t cmd;
@@ -74,13 +80,18 @@ void trackCamMain(TrackCamContext* c)
 		if (argsize < 0){
 			continue;
 		}else if (argsize > 0){
-			rc = HAL_SPI_Receive(context.hspi, rxbuff, argsize, 100);
+			memset(txbuff, 0, argsize);
+			rc = HAL_SPI_TransmitReceive(context.hspi, txbuff, rxbuff, argsize, 100);
+			//rc = HAL_SPI_Receive(context.hspi, rxbuff, argsize, 100);
+			//rc = HAL_SPI_Receive(context.hspi, rxbuff, argsize, HAL_MAX_DELAY);
 			if (rc == HAL_TIMEOUT){
 				continue;
 			}else if (rc != HAL_OK){
 				Error_Handler();
 			}
 		}
+		lastcmd = cmd;
+		cmdcount++;
 		int respsize = processHostCommand(
 				&hcomm, cmd, rxbuff, argsize, txbuff + 4, sizeof(txbuff) - 4);
 		if (respsize > 0){

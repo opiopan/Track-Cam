@@ -369,7 +369,7 @@ int processHostCommand(
 {
 	uint8_t idx = dispatchIdx[cmd];
 	if (idx != CMD_INVALID){
-		return dispatch[idx].func(handle, cmd, arg, argLength - 1, outBuf, outBufLength);
+		return dispatch[idx].func(handle, cmd, arg, argLength, outBuf, outBufLength);
 	}
 	return 0;
 }

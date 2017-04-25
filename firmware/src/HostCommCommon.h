@@ -50,55 +50,55 @@ typedef enum {
  *-------------------------------------------------------------*/
 typedef struct {
 	uint8_t mode;
-} RespGetServoMode;
+}__attribute__((__packed__)) RespGetServoMode;
 
 typedef struct {
 	int16_t pos[SERVO_NUM];
-} RespGetServoPos;
+}__attribute__((__packed__)) RespGetServoPos;
 
 typedef struct {
 	int16_t posRaw[SERVO_NUM];
-} RespGetServoPosRaw;
+}__attribute__((__packed__)) RespGetServoPosRaw;
 
 typedef struct {
 	int16_t theta[SERVO_NUM];
-} ArgSetServoTheta;
+}__attribute__((__packed__)) ArgSetServoTheta;
 
 typedef struct {
 	int16_t deltaTheta[SERVO_NUM];
-} ArgSetServoDeltaTheta;
+}__attribute__((__packed__)) ArgSetServoDeltaTheta;
 
 typedef struct {
 	int16_t duty[SERVO_NUM];
-} ArgSetServoDuty;
+}__attribute__((__packed__)) ArgSetServoDuty;
 
 typedef struct {
 	int16_t theta[SERVO_NUM];
 	int16_t duty[SERVO_NUM];
-} ArgSetServoThetaDuty;
+}__attribute__((__packed__)) ArgSetServoThetaDuty;
 
 typedef struct {
 	int16_t deltaTheta[SERVO_NUM];
 	int16_t duty[SERVO_NUM];
-} ArgSetServoDeltaThetaDuty;
+}__attribute__((__packed__)) ArgSetServoDeltaThetaDuty;
 
 typedef struct {
 	int16_t theta[SERVO_NUM];
 	uint16_t velocity[SERVO_NUM];
-} ArgSetServoThetaVelocity;
+}__attribute__((__packed__)) ArgSetServoThetaVelocity;
 
 typedef struct {
 	int16_t deltaTheta[SERVO_NUM];
 	uint16_t velocity[SERVO_NUM];
-} ArgSetServoDeltaThetaVelocity;
+}__attribute__((__packed__)) ArgSetServoDeltaThetaVelocity;
 
 typedef struct {
 	int8_t mode[LED_NUM];
-} ArgSetLEDMode;
+}__attribute__((__packed__)) ArgSetLEDMode;
 
 typedef struct {
 	LEDUserSeq sequence;
-} ArgRegisterLEDSequence;
+}__attribute__((__packed__)) ArgRegisterLEDSequence;
 
 
 #endif /* HOSTCOMMCOMMON_H_ */

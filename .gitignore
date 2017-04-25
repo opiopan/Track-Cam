@@ -19,3 +19,6 @@ eagle.epf
 /firmware/projects/*/Debug
 /firmware/projects/*/.gitignore
 .settings
+*.o
+*.so
+/raspi/cmd/trackcam

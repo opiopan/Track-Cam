@@ -39,6 +39,11 @@ int tcRequest(TCHandle* handle);
 int tcSetLedMode(TCHandle* handle, const ArgSetLEDMode* mode);
 int tcSetLedUserSequence(TCHandle* handle, const LEDUserSeq* sequence);
 
+int tcSetServoMode(TCHandle* handle, SERVO_MODE mode);
+int tcSetServoTheta(TCHandle* handle, int16_t theta[SERVO_NUM]);
+int tcSetServoThetaVelocity(TCHandle* handle, 
+			    int16_t theta[SERVO_NUM],
+			    int16_t velocity[SERVO_NUM]);
 int tcGetServoPosition(TCHandle* handle, RespGetServoPos* pos);
 
 #endif

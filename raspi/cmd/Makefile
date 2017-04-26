@@ -4,7 +4,7 @@ LFLAGS		+= -L../lib -ltrackcam -Wl,-rpath=/usr/local/lib
 
 BINPATH		 = /usr/local/bin
 
-OBJS		 = main.o led.o led-user-sequence.o servo-pos.o
+OBJS		 = main.o led.o led-user-sequence.o servo-pos.o servo.o
 TARGETS		 = trackcam
 
 all: $(TARGETS)

@@ -10,6 +10,7 @@ static struct {
     const char* cmd;
     int (*func)(TCHandle*, int, char**);
 } dispatch[] = {
+    {"servo", controlServo},
     {"servo-pos", getServoPosition},
     {"led", setLedMode},
     {"led-user-sequence", setLedUserSequence},
@@ -19,6 +20,7 @@ static struct {
 void printUsage()
 {
     fprintf(stderr, "usage:\n");
+    fprintf(stderr, "    trackcam servo [y|p:<position>[:<speed>]]... \n\n");
     fprintf(stderr, "    trackcam servo-pos \n\n");
     fprintf(stderr, "    trackcam led [<mode> [<mode>]] \n");
     fprintf(stderr, "        mode: reset|on|off|servo-idle|servo-running|emergency|user\n\n");

@@ -5,6 +5,7 @@
 
 extern void errorExit();
 
+int controlServo(TCHandle* handle, int argc, char** argv);
 int getServoPosition(TCHandle* handle, int argc, char** argv);
 
 int setLedMode(TCHandle* handle, int argc, char** argv);

@@ -15,7 +15,9 @@
  * Commands definition
  *-------------------------------------------------------------*/
 typedef enum {
-    CMD_GET_SERVO_MODE = 0x00,
+    CMD_NOP = 0x00,
+
+    CMD_GET_SERVO_MODE = 0x08,
     CMD_SET_SERVO_MODE_IDLE,
     CMD_SET_SERVO_MODE_THETA,
     CMD_SET_SERVO_MODE_DUTY,
@@ -33,8 +35,6 @@ typedef enum {
 
     CMD_SET_LED_MODE = 0x60,
     CMD_REGISTER_LED_SEQUENCE,
-
-    CMD_NOP = 0xfe,
 
     CMD_INVALID = 0xff
 } trackCamCommand;

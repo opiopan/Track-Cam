@@ -39,4 +39,6 @@ int tcRequest(TCHandle* handle);
 int tcSetLedMode(TCHandle* handle, const ArgSetLEDMode* mode);
 int tcSetLedUserSequence(TCHandle* handle, const LEDUserSeq* sequence);
 
+int tcGetServoPosition(TCHandle* handle, RespGetServoPos* pos);
+
 #endif

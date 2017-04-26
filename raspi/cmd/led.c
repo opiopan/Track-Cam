@@ -2,7 +2,6 @@
 
 #include <trackcam/trackcam.h>
 #include "trackcam.h"
-#include "led.h"
 
 static struct {
     const char* name;

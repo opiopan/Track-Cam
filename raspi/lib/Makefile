@@ -4,7 +4,7 @@ LFLAGS		+= -shared
 
 LIBPATH		= /usr/local/lib
 
-OBJS		= foundation.o led.o
+OBJS		= foundation.o led.o servo.o
 TARGETS		= libtrackcam.so
 
 all: $(TARGETS)

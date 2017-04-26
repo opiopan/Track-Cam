@@ -13,10 +13,10 @@
 #define LED_RED 1
 
 typedef enum {
-	LED_STATE_NONE = 0,
-	LED_STATE_INIT,
-	LED_STATE_RUNNING
-}LEDState;
+    LED_STATE_NONE = 0,
+    LED_STATE_INIT,
+    LED_STATE_RUNNING
+} LEDState;
 
 typedef uint8_t LEDSeqUnit;
 #define LED_SEQ_END 0
@@ -42,8 +42,8 @@ typedef int8_t LEDSeqType;
 #define LED_SEQ_UNIT_MODE(unit) ((unit) & 1)
 
 typedef struct {
-	LEDSeqUnit sequence[LED_NUM][LED_USER_SEQ_UNIT_NUM];
-}LEDUserSeq;
+    LEDSeqUnit sequence[LED_NUM][LED_USER_SEQ_UNIT_NUM];
+} LEDUserSeq;
 
 
 #endif /* LEDCOMMON_H_ */

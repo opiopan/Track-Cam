@@ -8,12 +8,12 @@
 #ifndef TRACKCAM_H_
 #define TRACKCAM_H_
 
-typedef struct{
-	SPI_HandleTypeDef* hspi;
-	ADC_HandleTypeDef* hadc;
-	TIM_HandleTypeDef* htimMotor;
-	TIM_HandleTypeDef* htimLed;
-}TrackCamContext;
+typedef struct {
+    SPI_HandleTypeDef* hspi;
+    ADC_HandleTypeDef* hadc;
+    TIM_HandleTypeDef* htimMotor;
+    TIM_HandleTypeDef* htimLed;
+} TrackCamContext;
 
 void trackCamMain(TrackCamContext* c);
 

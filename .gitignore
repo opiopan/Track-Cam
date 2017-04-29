@@ -14,7 +14,6 @@ Track-Cam.dri
 Track-Cam.gpi
 Track-Cam.pdf
 Track-Cam.pro
-eagle.epf
 .metadata
 /firmware/projects/*/Debug
 /firmware/projects/*/.gitignore

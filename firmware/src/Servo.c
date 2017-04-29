@@ -22,7 +22,7 @@
 
 #define KP_NUMER 900
 #define KP_DENOM 1
-#define KI_NUMER 300
+#define KI_NUMER 50
 #define KI_DENOM 1000
 #define KD_NUMER 40
 #define KD_DENOM 1

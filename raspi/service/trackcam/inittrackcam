@@ -1,4 +1,5 @@
 #!/bin/sh
 
 /usr/local/bin/openocd -f /usr/local/share/trackcam/reset.cfg
+sleep 0.5
 /usr/local/bin/trackcam led

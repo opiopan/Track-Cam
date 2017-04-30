@@ -1,0 +1,4 @@
+#!/bin/sh
+
+/usr/local/bin/trackcam servo
+/usr/local/bin/trackcam led off on

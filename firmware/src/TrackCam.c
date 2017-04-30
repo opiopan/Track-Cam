@@ -49,16 +49,9 @@ void trackCamMain(TrackCamContext* c)
     // Warm up device
     startLED(&hled);
     HAL_Delay(500);
-    LED_CONFIG(&hled, LED_SEQ_LEVEL_MASTER).type[LED_RED] = LED_SEQ_TYPE_ON;
-    commitLEDConfig(&hled, LED_SEQ_LEVEL_MASTER);
-    HAL_Delay(1500);
-    LED_CONFIG(&hled, LED_SEQ_LEVEL_MASTER).type[LED_BLUE] = LED_SEQ_TYPE_ON;
-    commitLEDConfig(&hled, LED_SEQ_LEVEL_MASTER);
-    HAL_Delay(1500);
-    LED_CONFIG(&hled, LED_SEQ_LEVEL_MASTER).type[LED_BLUE] = LED_SEQ_TYPE_OFF;
-    LED_CONFIG(&hled, LED_SEQ_LEVEL_MASTER).type[LED_RED] = LED_SEQ_TYPE_OFF;
-    commitLEDConfig(&hled, LED_SEQ_LEVEL_MASTER);
-    HAL_Delay(700);
+    LED_CONFIG(&hled, LED_SEQ_LEVEL_USER).type[LED_BLUE] = LED_SEQ_TYPE_OFF;
+    LED_CONFIG(&hled, LED_SEQ_LEVEL_USER).type[LED_RED] = LED_SEQ_TYPE_ON;
+    commitLEDConfig(&hled, LED_SEQ_LEVEL_USER);
 
     startServo(&hservo);
     LED_CONFIG(&hled, LED_SEQ_LEVEL_MASTER).type[LED_BLUE] =

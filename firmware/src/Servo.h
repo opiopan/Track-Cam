@@ -44,6 +44,13 @@ typedef struct {
     int16_t max;
 } ServoAdjuster;
 
+typedef struct{
+    int count;
+    int countLast;
+    int period;
+    int16_t posLast[SERVO_NUM];
+} ServoLFStats;
+
 typedef struct {
     SERVO_STATE status;
     TIM_HandleTypeDef* hTimer;
@@ -54,6 +61,7 @@ typedef struct {
     ServoPosition position[SERVO_NUM];
     int16_t pwmDuty[SERVO_NUM];
     ServoAdjuster adjuster[SERVO_NUM];
+    ServoLFStats lfStats;
 } ServoContext;
 
 typedef struct {
@@ -68,6 +76,7 @@ int deinitServo(ServoHandle* handle);
 int startServo(ServoHandle* handle);
 int stopServo(ServoHandle* handle);
 void scheduleServo(ServoHandle* handle);
+void maintainServoLF(ServoHandle* handle);
 
 inline int16_t getServoPosition(ServoHandle* handle, int servo)
 {

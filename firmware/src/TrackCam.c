@@ -109,6 +109,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
     if (htim == context.htimLed) {
         scheduleLED(&hled);
+        maintainServoLF(&hservo);
     }
 }
 

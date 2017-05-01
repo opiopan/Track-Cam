@@ -13,7 +13,7 @@
 
 #define POS_MAX 3800
 #define POS_MIN 100
-#define POS_ERROR 10
+#define POS_ERROR 7
 
 #define VELOCITY_ERROR 10
 
@@ -31,6 +31,8 @@
 
 #define POS_DMA_CH_BUFFER_SIZE 8
 #define POS_DMA_BUFFER_SIZE (POS_DMA_CH_BUFFER_SIZE * 2)
+
+#define WITHIN_ERROR_RANGE(V, T, E) ((V) > (T) - (E) && (V) < (T) + (E))
 
 static int startMotor(ServoHandle* Handle);
 static int stopMotor(ServoHandle* servo);
@@ -209,12 +211,12 @@ static int16_t calculateDuty(volatile ServoContext* context, int ch)
 /*---------------------------------------------------------------
  * DMA interrupt handler of ADC
  *-------------------------------------------------------------*/
-volatile int adc_count;
 void scheduleServo(ServoHandle* handle)
 {
-    adc_count++;
-
     ServoContext* context = (ServoContext*) handle->context;
+    ServoLFStats* stats = (ServoLFStats*) &handle->context->lfStats;
+
+    stats->count++;
 
     // reflect configuration change
     if (context->needToUpdate) {
@@ -259,6 +261,29 @@ void scheduleServo(ServoHandle* handle)
         context->position[ch].posLast = context->position[ch].pos;
     }
 
+}
+
+/*---------------------------------------------------------------
+ * Low frequency maintaining invoked each 50msec
+ *-------------------------------------------------------------*/
+void maintainServoLF(ServoHandle* handle)
+{
+    ServoContext* context = (ServoContext*) handle->context;
+    ServoLFStats* stats = (ServoLFStats*)&handle->context->lfStats;
+
+    stats->period = stats->count - stats->countLast;
+    stats->countLast = stats->count;
+
+    int servo;
+    for (servo = 0; servo < SERVO_NUM; servo++){
+        ServoPosition* position = (ServoPosition*)&context->position[servo];
+        ServoConfig* config = (ServoConfig*)&context->configSet.config[servo];
+        if (WITHIN_ERROR_RANGE(position->pos, config->target, POS_ERROR * 2) &&
+            WITHIN_ERROR_RANGE(position->pos, stats->posLast[servo], POS_ERROR)){
+            config->target = position->pos;
+        }
+        stats->posLast[servo] = position->pos;
+    }
 }
 
 /*---------------------------------------------------------------

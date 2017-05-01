@@ -308,28 +308,29 @@ static int registerLEDSequence(HostCommHandle* handle, uint8_t cmd,
 static struct {
     int command;
     int argsize;
-    int (*func)(HostCommHandle* handle, uint8_t cmd, uint8_t* arg, int alen,
-            uint8_t* respBuf, int rblen);
-} dispatch[] = { { CMD_GET_SERVO_MODE, 0, getServoMode }, {
-        CMD_SET_SERVO_MODE_IDLE, 0, setServoMode }, { CMD_SET_SERVO_MODE_THETA,
-        0, setServoMode }, { CMD_SET_SERVO_MODE_DUTY, 0, setServoMode }, {
-        CMD_SET_SERVO_MODE_THETA_DUTY, 0, setServoMode },
+    int (*func)(HostCommHandle* handle, uint8_t cmd, uint8_t* arg,
+                int alen, uint8_t* respBuf, int rblen);
+} dispatch[] = {
+    {CMD_GET_SERVO_MODE, 0, getServoMode},
+    {CMD_SET_SERVO_MODE_IDLE, 0, setServoMode},
+    {CMD_SET_SERVO_MODE_THETA, 0, setServoMode},
+    {CMD_SET_SERVO_MODE_DUTY, 0, setServoMode},
+    {CMD_SET_SERVO_MODE_THETA_DUTY, 0, setServoMode},
 
-{ CMD_GET_SERVO_POS, 0, getServoPos }, { CMD_GET_SERVO_POS_RAW, 0,
-        getServoPosRaw }, { CMD_SET_SERVO_THETA, sizeof(ArgSetServoTheta),
-        setServoTheta }, { CMD_SET_SERVO_DELTA_THETA,
-        sizeof(ArgSetServoDeltaTheta), setServoDeltaTheta }, {
-        CMD_SET_SERVO_DUTY, sizeof(ArgSetServoDuty), setServoDuty }, {
-        CMD_SET_SERVO_THETA_DUTY, sizeof(ArgSetServoThetaDuty),
-        setServoThetaDuty }, { CMD_SET_SERVO_DELTA_THETA_DUTY,
-        sizeof(ArgSetServoDeltaThetaDuty), setServoDeltaThetaDuty }, {
-        CMD_SET_SERVO_THETA_VELOCITY, sizeof(ArgSetServoThetaVelocity),
-        setServoThetaVelocity }, { CMD_SET_SERVO_DELTA_THETA_VELOCITY,
-        sizeof(ArgSetServoDeltaThetaVelocity), setServoDeltaThetaVelocity },
+    {CMD_GET_SERVO_POS, 0, getServoPos},
+    {CMD_GET_SERVO_POS_RAW, 0, getServoPosRaw},
+    {CMD_SET_SERVO_THETA, sizeof(ArgSetServoTheta), setServoTheta},
+    {CMD_SET_SERVO_DELTA_THETA, sizeof(ArgSetServoDeltaTheta), setServoDeltaTheta},
+    {CMD_SET_SERVO_DUTY, sizeof(ArgSetServoDuty), setServoDuty},
+    {CMD_SET_SERVO_THETA_DUTY, sizeof(ArgSetServoThetaDuty), setServoThetaDuty },
+    {CMD_SET_SERVO_DELTA_THETA_DUTY, sizeof(ArgSetServoDeltaThetaDuty), setServoDeltaThetaDuty},
+    {CMD_SET_SERVO_THETA_VELOCITY, sizeof(ArgSetServoThetaVelocity), setServoThetaVelocity},
+    {CMD_SET_SERVO_DELTA_THETA_VELOCITY, sizeof(ArgSetServoDeltaThetaVelocity), setServoDeltaThetaVelocity},
 
-{ CMD_SET_LED_MODE, sizeof(ArgSetLEDMode), setLEDMode }, {
-        CMD_REGISTER_LED_SEQUENCE, sizeof(ArgRegisterLEDSequence),
-        registerLEDSequence }, { CMD_INVALID, 0, NULL } };
+    {CMD_SET_LED_MODE, sizeof(ArgSetLEDMode), setLEDMode},
+    {CMD_REGISTER_LED_SEQUENCE, sizeof(ArgRegisterLEDSequence), registerLEDSequence },
+    {CMD_INVALID, 0, NULL}
+};
 
 static uint8_t dispatchIdx[256];
 

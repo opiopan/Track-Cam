@@ -32,15 +32,15 @@ typedef struct {
 
 static SeqTableUnit seqTable[] = {
     /* LED_SEQ_TYPE_OFF */
-    { { { LEDSeqOff, 0 }, { LEDSeqOff, 0 } } },
+    {{{LEDSeqOff, 0}, {LEDSeqOff, 0}}},
     /* LED_SEQ_TYPE_ON */
-    { { { LEDSeqOn, 0 }, { LEDSeqOn, 0 } } },
+    {{{LEDSeqOn, 0}, {LEDSeqOn, 0}}},
     /* LED_SEQ_TYPE_EMERGENCY */
-    { { { LEDSeqShortBlink, 0 }, { LEDSeqShortBlink, 1 } } },
+    {{{LEDSeqShortBlink, 0}, {LEDSeqShortBlink, 1}}},
     /* LED_SEQ_TYPE_SERVO_IDLE */
-    { { { LEDSeqBlip, 0 }, { LEDSeqOff, 0 } } },
+    {{{LEDSeqBlip, 0}, {LEDSeqOff, 0}}},
     /* LED_SEQ_TYPE_SERVO_RUNNING */
-    { { { LEDSeqDoubleBlip, 0 }, { LEDSeqOff, 0 } } },
+    {{{LEDSeqDoubleBlip, 0}, {LEDSeqOff, 0}}},
 };
 
 #define SEQ_TABLE_ROWS (sizeof(seqTable) / sizeof(SeqTableUnit))
@@ -116,14 +116,8 @@ int stopLED(LEDHandle* handle)
 /*---------------------------------------------------------------
  * timer interrupt handler
  *-------------------------------------------------------------*/
-extern volatile int adc_count;
-volatile int adc_count_last;
-volatile int adc_period;
 void scheduleLED(LEDHandle* handle)
 {
-    adc_period = adc_count - adc_count_last;
-    adc_count_last = adc_count;
-
     volatile LEDContext* context = handle->context;
 
     /* reflect configuration change */

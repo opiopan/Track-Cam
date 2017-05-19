@@ -106,6 +106,39 @@ static int getServoPosRaw(HostCommHandle* handle, uint8_t cmd, uint8_t* arg,
     return sizeof(*resp);
 }
 
+static int getServoPosTime(HostCommHandle* handle, uint8_t cmd, uint8_t* arg,
+        int alen, uint8_t* respBuf, int rblen)
+{
+    if (alen != 0) {
+        return 0;
+    }
+    RespGetServoPosTime* resp = (RespGetServoPosTime*) respBuf;
+    resp->time = getServoTime(handle->servo);
+    int i;
+    for (i = 0; i < SERVO_NUM; i++) {
+        int16_t pos = getServoPosition(handle->servo, i);
+        resp->pos[i] = convNE16((uint16_t*) &pos);
+    }
+    return sizeof(*resp);
+}
+
+
+static int getServoPosRawTime(HostCommHandle* handle, uint8_t cmd, uint8_t* arg,
+        int alen, uint8_t* respBuf, int rblen)
+{
+    if (alen != 0) {
+        return 0;
+    }
+    RespGetServoPosRawTime* resp = (RespGetServoPosRawTime*) respBuf;
+    resp->time = getServoTime(handle->servo);
+    int i;
+    for (i = 0; i < SERVO_NUM; i++) {
+        int16_t pos = getServoPositionRaw(handle->servo, i);
+        resp->posRaw[i] = convNE16((uint16_t*) &pos);
+    }
+    return sizeof(*resp);
+}
+
 static int setServoTheta(HostCommHandle* handle, uint8_t cmd, uint8_t* arg,
         int alen, uint8_t* respBuf, int rblen)
 {
@@ -319,6 +352,8 @@ static struct {
 
     {CMD_GET_SERVO_POS, 0, getServoPos},
     {CMD_GET_SERVO_POS_RAW, 0, getServoPosRaw},
+    {CMD_GET_SERVO_POS_TIME, 0, getServoPosTime},
+    {CMD_GET_SERVO_POS_RAW_TIME, 0, getServoPosRawTime},
     {CMD_SET_SERVO_THETA, sizeof(ArgSetServoTheta), setServoTheta},
     {CMD_SET_SERVO_DELTA_THETA, sizeof(ArgSetServoDeltaTheta), setServoDeltaTheta},
     {CMD_SET_SERVO_DUTY, sizeof(ArgSetServoDuty), setServoDuty},

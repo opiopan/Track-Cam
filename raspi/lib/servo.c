@@ -49,7 +49,6 @@ int tcSetServoThetaVelocity(TCHandle* handle,
     return tcRequest(handle);
 }
 
-
 int tcGetServoPosition(TCHandle* handle, RespGetServoPos* pos)
 {
     RespGetServoPos *resp = (RespGetServoPos*)TCResp(handle);
@@ -67,6 +66,29 @@ int tcGetServoPosition(TCHandle* handle, RespGetServoPos* pos)
     for (i = 0; i < SERVO_NUM; i++){
 	pos->pos[i] = ntohs(resp->pos[i]);
     }
+
+    return TC_OK;
+}
+
+int tcGetServoPositionEx(TCHandle* handle, RespGetServoPosTime* pos, int isRow)
+{
+    RespGetServoPosTime *resp = (RespGetServoPosTime*)TCResp(handle);
+
+    *TCCmd(handle) = isRow ?
+	CMD_GET_SERVO_POS_RAW_TIME : CMD_GET_SERVO_POS_TIME;
+    TCSetArgLen(handle, 0);
+    TCSetRespLen(handle, sizeof(*resp));
+
+    int rc = tcRequest(handle);
+    if (rc != TC_OK){
+	return rc;
+    }
+
+    int i;
+    for (i = 0; i < SERVO_NUM; i++){
+	pos->pos[i] = ntohs(resp->pos[i]);
+    }
+    pos->time = ntohl(resp->time);
 
     return TC_OK;
 }

@@ -53,6 +53,7 @@ typedef struct{
 
 typedef struct {
     SERVO_STATE status;
+    int32_t     time;
     TIM_HandleTypeDef* hTimer;
     ADC_HandleTypeDef* hAdc;
     ServoConfigSet configSet;
@@ -77,6 +78,10 @@ int startServo(ServoHandle* handle);
 int stopServo(ServoHandle* handle);
 void scheduleServo(ServoHandle* handle);
 void maintainServoLF(ServoHandle* handle);
+
+inline int32_t getServoTime(ServoHandle* handle){
+    return handle->context->lfStats.count;
+}
 
 inline int16_t getServoPosition(ServoHandle* handle, int servo)
 {

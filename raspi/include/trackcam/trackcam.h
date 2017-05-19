@@ -45,5 +45,7 @@ int tcSetServoThetaVelocity(TCHandle* handle,
 			    int16_t theta[SERVO_NUM],
 			    int16_t velocity[SERVO_NUM]);
 int tcGetServoPosition(TCHandle* handle, RespGetServoPos* pos);
+int tcGetServoPositionEx(TCHandle* handle, RespGetServoPosTime* pos,
+			 int isRow);
 
 #endif

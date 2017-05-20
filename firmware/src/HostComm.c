@@ -8,7 +8,7 @@
 #include "HostComm.h"
 #include <string.h>
 
-inline uint32_t convNE32(uint16_t* x)
+inline uint32_t convNE32(uint32_t* x)
 {
     uint8_t* in = (uint8_t*) x;
 #ifdef __ARM_BIG_ENDIAN
@@ -113,7 +113,8 @@ static int getServoPosTime(HostCommHandle* handle, uint8_t cmd, uint8_t* arg,
         return 0;
     }
     RespGetServoPosTime* resp = (RespGetServoPosTime*) respBuf;
-    resp->time = getServoTime(handle->servo);
+    int32_t time = getServoTime(handle->servo);
+    resp->time = convNE32((uint32_t*)&time);
     int i;
     for (i = 0; i < SERVO_NUM; i++) {
         int16_t pos = getServoPosition(handle->servo, i);
@@ -130,7 +131,8 @@ static int getServoPosRawTime(HostCommHandle* handle, uint8_t cmd, uint8_t* arg,
         return 0;
     }
     RespGetServoPosRawTime* resp = (RespGetServoPosRawTime*) respBuf;
-    resp->time = getServoTime(handle->servo);
+    int32_t time = getServoTime(handle->servo);
+    resp->time = convNE32((uint32_t*)&time);
     int i;
     for (i = 0; i < SERVO_NUM; i++) {
         int16_t pos = getServoPositionRaw(handle->servo, i);

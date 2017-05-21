@@ -92,3 +92,21 @@ int tcGetServoPositionEx(TCHandle* handle, RespGetServoPosTime* pos, int isRow)
 
     return TC_OK;
 }
+
+int tcGetServoFrequency(TCHandle* handle, int32_t* frequency)
+{
+    RespGetServoFreq *resp = (RespGetServoFreq*)TCResp(handle);
+
+    *TCCmd(handle) = CMD_GET_SERVO_FREQ;
+    TCSetArgLen(handle, 0);
+    TCSetRespLen(handle, sizeof(*resp));
+
+    int rc = tcRequest(handle);
+    if (rc != TC_OK){
+	return rc;
+    }
+
+    *frequency = ntohl(resp->frequency);
+
+    return TC_OK;
+}

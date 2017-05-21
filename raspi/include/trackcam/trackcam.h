@@ -47,5 +47,6 @@ int tcSetServoThetaVelocity(TCHandle* handle,
 int tcGetServoPosition(TCHandle* handle, RespGetServoPos* pos);
 int tcGetServoPositionEx(TCHandle* handle, RespGetServoPosTime* pos,
 			 int isRow);
+int tcGetServoFrequency(TCHandle* handle, int32_t* frequency);
 
 #endif

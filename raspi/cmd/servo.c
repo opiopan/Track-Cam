@@ -11,7 +11,8 @@
 
 static const long USECINSEC = 1000 * 1000;
 
-static int printPosition(TCHandle* handle, int32_t* ref, int reset)
+static int printPosition(TCHandle* handle, int32_t* ref, int reset, 
+			 int32_t freq)
 {
     RespGetServoPosTime pos;
     int rc = tcGetServoPositionEx(handle, &pos, 0);
@@ -21,10 +22,12 @@ static int printPosition(TCHandle* handle, int32_t* ref, int reset)
 
     if (reset){
 	*ref = pos.time;
-	printf("'time','yaw','pitch'\n");
+	printf("time[msec],yaw,pitch\n");
     }
 
-    printf("%d,%d,%d\n", pos.time - *ref, (int)pos.pos[0], (int)pos.pos[1]);
+    printf("%f,%d,%d\n", 
+	   (double)(pos.time - *ref) / (double)freq * 1000., 
+	   (int)pos.pos[0], (int)pos.pos[1]);
     
     return TC_OK;
 }
@@ -129,9 +132,14 @@ int controlServo(TCHandle* handle, int argc, char** argv)
 	return TC_FATAL_ERROR;
     }
 
+    int32_t servoFreq;
     int rc;
+    if ((rc = tcGetServoFrequency(handle, &servoFreq)) != TC_OK){
+	return rc;
+    }
+
     if (capture != 0 &&
-	(rc = printPosition(handle, &servoTime, 1)) != TC_OK){
+	(rc = printPosition(handle, &servoTime, 1, servoFreq)) != TC_OK){
 	return rc;
     }
 
@@ -142,7 +150,8 @@ int controlServo(TCHandle* handle, int argc, char** argv)
     if (capture != 0){
 	int i;
 	for (i = 0; 1; i++){
-	    if ((rc = printPosition(handle, &servoTime, 0)) != TC_OK){
+	    if ((rc = printPosition(handle, &servoTime, 0, 
+				    servoFreq)) != TC_OK){
 		return rc;
 	    }
 	    if (i % 10 == 9 && isConsumedTime(capture, &refTime)){

@@ -10,7 +10,7 @@
 #include <trackcam/trackcam.h>
 
 static const char* SPIDEV = "/dev/spidev0.0";
-static const  SPEED = 300000;
+static const  SPEED = 200000;
 static const int MODE = SPI_MODE_0;
 static const char LSB_FIRST = 0;
 static const char BITS_PER_WORD = 8;

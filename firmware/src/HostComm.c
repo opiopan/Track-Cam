@@ -141,6 +141,18 @@ static int getServoPosRawTime(HostCommHandle* handle, uint8_t cmd, uint8_t* arg,
     return sizeof(*resp);
 }
 
+static int getServoFreq(HostCommHandle* handle, uint8_t cmd, uint8_t* arg,
+        int alen, uint8_t* respBuf, int rblen)
+{
+    if (alen != 0) {
+        return 0;
+    }
+    RespGetServoFreq* resp = (RespGetServoFreq*) respBuf;
+    int32_t freq = getServoSamplingFrequency(handle->servo);
+    resp->frequency = convNE32((uint32_t*)&freq);
+    return sizeof(*resp);
+}
+
 static int setServoTheta(HostCommHandle* handle, uint8_t cmd, uint8_t* arg,
         int alen, uint8_t* respBuf, int rblen)
 {
@@ -356,6 +368,8 @@ static struct {
     {CMD_GET_SERVO_POS_RAW, 0, getServoPosRaw},
     {CMD_GET_SERVO_POS_TIME, 0, getServoPosTime},
     {CMD_GET_SERVO_POS_RAW_TIME, 0, getServoPosRawTime},
+    {CMD_GET_SERVO_FREQ, 0, getServoFreq},
+
     {CMD_SET_SERVO_THETA, sizeof(ArgSetServoTheta), setServoTheta},
     {CMD_SET_SERVO_DELTA_THETA, sizeof(ArgSetServoDeltaTheta), setServoDeltaTheta},
     {CMD_SET_SERVO_DUTY, sizeof(ArgSetServoDuty), setServoDuty},

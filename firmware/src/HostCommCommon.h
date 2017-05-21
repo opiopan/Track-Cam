@@ -27,6 +27,8 @@ typedef enum {
     CMD_GET_SERVO_POS_RAW,
     CMD_GET_SERVO_POS_TIME = 0x20,
     CMD_GET_SERVO_POS_RAW_TIME,
+    CMD_GET_SERVO_FREQ,
+
     CMD_SET_SERVO_THETA = 0x12,
     CMD_SET_SERVO_DELTA_THETA,
     CMD_SET_SERVO_DUTY,
@@ -71,6 +73,10 @@ typedef struct {
     int16_t posRaw[SERVO_NUM];
     int32_t time;
 }__attribute__((__packed__)) RespGetServoPosRawTime;
+
+typedef struct {
+    int32_t frequency;
+}__attribute__((__packed__)) RespGetServoFreq;
 
 typedef struct {
     int16_t theta[SERVO_NUM];

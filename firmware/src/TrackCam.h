@@ -16,5 +16,6 @@ typedef struct {
 } TrackCamContext;
 
 void trackCamMain(TrackCamContext* c);
+void trackCamErrorHandler();
 
 #endif /* TRACKCAM_H_ */

@@ -119,3 +119,21 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* handle)
         scheduleServo(&hservo);
     }
 }
+
+void trackCamErrorHandler()
+{
+    // set servo mode to idle
+    int i;
+    for (i = 0; i < SERVO_NUM; i++) {
+        SERVO_CONFIG(&hservo, i).mode = SERVO_IDLE;
+    }
+    commitServoConfig(&hservo);
+
+    // set led mode to emergency
+    LED_CONFIG(&hled, LED_SEQ_LEVEL_USER).type[LED_BLUE] = LED_SEQ_TYPE_EMERGENCY;
+    LED_CONFIG(&hled, LED_SEQ_LEVEL_USER).type[LED_RED] = LED_SEQ_TYPE_EMERGENCY;
+    commitLEDConfig(&hled, LED_SEQ_LEVEL_USER);
+
+    while(1);
+}
+

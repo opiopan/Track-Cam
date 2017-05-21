@@ -79,6 +79,11 @@ int stopServo(ServoHandle* handle);
 void scheduleServo(ServoHandle* handle);
 void maintainServoLF(ServoHandle* handle);
 
+inline int32_t getServoSamplingFrequency(ServoHandle* handle)
+{
+    return handle->context->lfStats.period * 20;
+}
+
 inline int32_t getServoTime(ServoHandle* handle){
     return handle->context->lfStats.count;
 }

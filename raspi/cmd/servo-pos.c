@@ -6,17 +6,18 @@
 
 int getServoPosition(TCHandle* handle, int argc, char** argv)
 {
-    if (argc != 0){
+    if (argc != 1){
 	errorExit(SYNTAX_ERROR, "trackcam: too many argument is specified");
     }
 
-    RespGetServoPos pos;
-    int rc = tcGetServoPosition(handle, &pos);
+    RespGetServoPosTime pos;
+    int rc = tcGetServoPositionEx(handle, &pos, 0);
     if (rc != TC_OK){
 	return rc;
     }
 
-    printf("yaw:%d pitch:%d\n", (int)pos.pos[0], (int)pos.pos[1]);
+    printf("yaw:%d pitch:%d time:%d\n", 
+	   (int)pos.pos[0], (int)pos.pos[1], pos.time);
 
     return TC_OK;
 }

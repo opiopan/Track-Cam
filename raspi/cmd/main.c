@@ -20,7 +20,7 @@ static struct {
 void printUsage()
 {
     fprintf(stderr, "usage:\n");
-    fprintf(stderr, "    trackcam servo [y|p:<position>[:<speed>]]... \n\n");
+    fprintf(stderr, "    trackcam servo [-c <duration>] ][y|p:<position>[:<speed>]]... \n\n");
     fprintf(stderr, "    trackcam servo-pos \n\n");
     fprintf(stderr, "    trackcam led [<mode> [<mode>]] \n");
     fprintf(stderr, "        mode: reset|on|off|servo-idle|servo-running|emergency|user\n\n");
@@ -67,7 +67,7 @@ int main(int argc, char** argv)
 	errorExit(rc, "trackcam: opening SPI device failed");
     }
 
-    rc = dispatch[index].func(&handle, argc - 2, argv + 2);
+    rc = dispatch[index].func(&handle, argc - 1, argv + 1);
     if (rc != TC_OK){
 	errorExit(rc, "trackcam: communicating with trackCam failed");
     }

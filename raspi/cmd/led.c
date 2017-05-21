@@ -19,18 +19,18 @@ static struct {
 
 int setLedMode(TCHandle* handle, int argc, char** argv)
 {
-    if (argc > 2){
+    if (argc > 3){
 	errorExit(SYNTAX_ERROR, "trackcam: too many argument is specified");
     }
 
     ArgSetLEDMode mode = {{LED_SEQ_TYPE_NA, LED_SEQ_TYPE_NA}};
 
     int arg;
-    for (arg = 0; arg < argc; arg++){
+    for (arg = 1; arg < argc; arg++){
 	int i;
 	for (i = 0; table[i].name; i++){
 	    if (strcmp(table[i].name, argv[arg]) == 0){
-		mode.mode[arg] = table[i].type;
+		mode.mode[arg - 1] = table[i].type;
 		break;
 	    }
 	}
@@ -38,7 +38,7 @@ int setLedMode(TCHandle* handle, int argc, char** argv)
 	    errorExit(SYNTAX_ERROR, 
 		      "trackcam: unknown led mode is specified");
 	}
-	if (arg == 0){
+	if (arg == 1){
 	    mode.mode[1] = mode.mode[0];
 	}
     }

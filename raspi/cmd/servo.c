@@ -2,18 +2,66 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdint.h>
+#include <unistd.h>
+#include <sys/time.h>
+#include <sys/resource.h>
 
 #include <trackcam/trackcam.h>
 #include "trackcam.h"
+
+static const long USECINSEC = 1000 * 1000;
+
+static int printPosition(TCHandle* handle, int32_t* ref, int reset)
+{
+    RespGetServoPosTime pos;
+    int rc = tcGetServoPositionEx(handle, &pos, 0);
+    if (rc != TC_OK){
+	return rc;
+    }
+
+    if (reset){
+	*ref = pos.time;
+	printf("'time','yaw','pitch'\n");
+    }
+
+    printf("%d,%d,%d\n", pos.time - *ref, (int)pos.pos[0], (int)pos.pos[1]);
+    
+    return TC_OK;
+}
+
+static int isConsumedTime(int budget, struct timeval* ref)
+{
+    struct timeval now;
+    if (gettimeofday(&now, NULL) != 0){
+	return 1;
+    }
+
+    long past = 
+	(now.tv_sec - ref->tv_sec) * USECINSEC + now.tv_usec - ref->tv_usec;
+    return past > budget * USECINSEC;
+	
+}
 
 int controlServo(TCHandle* handle, int argc, char** argv)
 {
     int16_t pos[] = {-1, -1};
     int16_t velocity[] = {-1, -1};
 
-    if (argc > 0){
+    int capture = 0;
+    int opt;
+    while ((opt = getopt(argc, argv, "c:")) != -1){
+	switch (opt) {
+	case 'c':
+	    capture = atoi(optarg);
+	    break;
+	default:
+	    errorExit(SYNTAX_ERROR, "trackcam: syntax error");
+	}
+    }
+
+    if (argc > optind){
 	int i;
-	for (i = 0; i < argc; i++){
+	for (i = optind; i < argc; i++){
 	    const char* arg = argv[i];
 	    if (strlen(arg) > 3){
 		int ch = 0;
@@ -75,6 +123,34 @@ int controlServo(TCHandle* handle, int argc, char** argv)
 	}
     }
 
-    return tcSetServoMode(handle, mode);;
+    int32_t servoTime;
+    struct timeval  refTime;
+    if (gettimeofday(&refTime, NULL) != 0){
+	return TC_FATAL_ERROR;
+    }
+
+    int rc;
+    if (capture != 0 &&
+	(rc = printPosition(handle, &servoTime, 1)) != TC_OK){
+	return rc;
+    }
+
+    if ((rc = tcSetServoMode(handle, mode)) != TC_OK){
+	return rc;
+    }
+
+    if (capture != 0){
+	int i;
+	for (i = 0; 1; i++){
+	    if ((rc = printPosition(handle, &servoTime, 0)) != TC_OK){
+		return rc;
+	    }
+	    if (i % 10 == 9 && isConsumedTime(capture, &refTime)){
+		break;
+	    }
+	}
+    }
+
+    return TC_OK;
 }
 

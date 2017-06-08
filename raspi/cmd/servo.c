@@ -32,7 +32,7 @@ static int printPosition(TCHandle* handle, int32_t* ref, int reset,
     return TC_OK;
 }
 
-static int isConsumedTime(int budget, struct timeval* ref)
+static int isConsumedTime(double budget, struct timeval* ref)
 {
     struct timeval now;
     if (gettimeofday(&now, NULL) != 0){
@@ -50,12 +50,12 @@ int controlServo(TCHandle* handle, int argc, char** argv)
     int16_t pos[] = {-1, -1};
     int16_t velocity[] = {-1, -1};
 
-    int capture = 0;
+    double capture = 0.0;
     int opt;
     while ((opt = getopt(argc, argv, "c:")) != -1){
 	switch (opt) {
 	case 'c':
-	    capture = atoi(optarg);
+	    capture = atof(optarg);
 	    break;
 	default:
 	    errorExit(SYNTAX_ERROR, "trackcam: syntax error");
@@ -138,7 +138,7 @@ int controlServo(TCHandle* handle, int argc, char** argv)
 	return rc;
     }
 
-    if (capture != 0 &&
+    if (capture != 0.0 &&
 	(rc = printPosition(handle, &servoTime, 1, servoFreq)) != TC_OK){
 	return rc;
     }
@@ -147,7 +147,7 @@ int controlServo(TCHandle* handle, int argc, char** argv)
 	return rc;
     }
 
-    if (capture != 0){
+    if (capture != 0.0){
 	int i;
 	for (i = 0; 1; i++){
 	    if ((rc = printPosition(handle, &servoTime, 0, 
